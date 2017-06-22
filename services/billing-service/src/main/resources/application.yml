@@ -1,0 +1,40 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: billing-service
+  main:
+    banner-mode: "off"
+  datasource:
+    platform: h2
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+    driverClassName: org.h2.Driver
+    username: demoworkflow
+    password: demoworkflow
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  dao:
+    exceptiontranslation:
+      enabled: true      
+  kafka:
+    client-id: billing-service
+    bootstrap-servers:
+      - localhost:9092
+    template:
+      default-topic: payment
+    #listener:
+    #  ack-mode: manual
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: payment
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #enable-auto-commit: false
