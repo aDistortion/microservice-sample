@@ -19,8 +19,6 @@ spring:
     database: H2
     show-sql: true
     hibernate:
-      naming:
-        strategy: org.hibernate.cfg.ImprovedNamingStrategy
       ddl-auto: create-drop
   dao:
     exceptiontranslation:
