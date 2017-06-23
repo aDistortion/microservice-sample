@@ -14,11 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 @Entity
 @Table(name="orderEntity")
-@JsonTypeName(value="order")
 public class Order {
 
 	@Id
@@ -33,7 +30,7 @@ public class Order {
 	private boolean paymentRecieved = false;
 	
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -41,7 +38,7 @@ public class Order {
 	}
 
 	public List<LineItem> getLineItems() {
-		return lineItems;
+		return this.lineItems;
 	}
 
 	public void setLineItems(List<LineItem> lineItems) {
@@ -49,7 +46,7 @@ public class Order {
 	}
 
 	public boolean isPaymentRecieved() {
-		return paymentRecieved;
+		return this.paymentRecieved;
 	}
 
 	public void setPaymentRecieved(boolean paymentRecieved) {

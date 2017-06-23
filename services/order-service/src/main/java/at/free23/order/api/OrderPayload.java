@@ -5,13 +5,11 @@ package at.free23.order.api;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 /**
  * @author michael.vlasaty
  *
  */
-@JsonTypeName(value="orderPayload")
+// @JsonTypeName(value="orderPayload")
 public class OrderPayload extends TransactionPayload {
 
 	private List<LineItem> lineItems;

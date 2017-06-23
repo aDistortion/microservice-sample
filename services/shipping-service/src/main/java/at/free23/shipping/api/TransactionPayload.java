@@ -1,25 +1,17 @@
 /**
- *
+ * 
  */
-package at.free23.billing.api;
+package at.free23.shipping.api;
 
 /**
  * @author michael.vlasaty
  *
  */
-// @JsonTypeInfo(
-// use = JsonTypeInfo.Id.NAME,
-// include = As.PROPERTY,
-// property = "type")
-// @JsonSubTypes({
-// @JsonSubTypes.Type(value = OrderPayload.class, name = "orderPayload"),
-// @JsonSubTypes.Type(value = LineItemPayload.class, name = "lineItemPayload")
-// })
 public class TransactionPayload {
 
 	protected Long orderRef;
 	protected String event;
-
+	
 	public Long getOrderRef() {
 		return this.orderRef;
 	}

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import at.free23.order.api.Order;
 import at.free23.order.api.OrderEvent;
@@ -33,7 +35,7 @@ public class OrderPlacementHandler {
 	public void onCreated(Order newOrder){
 		final OrderPayload payload = new OrderPayload(newOrder.getId(), OrderEvent.ORDER_RCV,
 				newOrder.getLineItems());
-		this.template.send("order",payload);
+		final ListenableFuture<SendResult<String, TransactionPayload>> future = this.template.send("order", payload);
 		LOGGER.info("New order has been placed");
 	}
 }

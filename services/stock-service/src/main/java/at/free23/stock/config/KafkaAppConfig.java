@@ -1,7 +1,7 @@
 /**
  *
  */
-package at.free23.billing.config;
+package at.free23.stock.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;

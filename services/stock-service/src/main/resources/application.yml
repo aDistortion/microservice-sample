@@ -27,3 +27,14 @@ spring:
     serialization:
       write-dates-as-timestamps: false
       indent-output: true
+  kafka:
+    client-id: stock-service
+    bootstrap-servers:
+      - localhost:9092
+    template:
+      default-topic: shipping
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: stock

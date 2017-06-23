@@ -1,13 +1,12 @@
 /**
  *
  */
-package at.free23.billing.api;
+package at.free23.stock.api;
 
 /**
  * @author michael.vlasaty
  *
  */
-// @JsonTypeName(value="lineItemPayload")
 public class LineItemPayload extends TransactionPayload {
 
 	private LineItem item;

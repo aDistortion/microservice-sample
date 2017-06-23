@@ -1,7 +1,7 @@
 /**
  *
  */
-package at.free23.billing.api;
+package at.free23.stock.api;
 
 import java.util.List;
 
@@ -9,12 +9,12 @@ import java.util.List;
  * @author michael.vlasaty
  *
  */
-// @JsonTypeName(value="orderPayload")
 public class OrderPayload extends TransactionPayload {
 
 	private List<LineItem> lineItems;
 
-	public OrderPayload(){ }
+	public OrderPayload() {
+	}
 
 	public OrderPayload(Long orderRef, OrderEvent event) {
 		this.orderRef = orderRef;

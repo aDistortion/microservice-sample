@@ -22,7 +22,11 @@ spring:
       ddl-auto: create-drop
   dao:
     exceptiontranslation:
-      enabled: true      
+      enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true      
   kafka:
     client-id: order-service
     bootstrap-servers:

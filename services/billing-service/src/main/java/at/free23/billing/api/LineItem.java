@@ -3,16 +3,14 @@ package at.free23.billing.api;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 @Entity
-@JsonTypeName(value="lineItem")
+// @JsonTypeName(value="lineItem")
 public class LineItem {
 
 	@Id
 	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private Long quantity;
 	private Double netAmount;
 	private Double grossAmount;
@@ -20,7 +18,7 @@ public class LineItem {
 	private String currency;
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -28,7 +26,7 @@ public class LineItem {
 	}
 
 	public Long getQuantity() {
-		return quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(Long quantity) {
@@ -36,7 +34,7 @@ public class LineItem {
 	}
 
 	public Double getNetAmount() {
-		return netAmount;
+		return this.netAmount;
 	}
 
 	public void setNetAmount(Double netAmount) {
@@ -44,7 +42,7 @@ public class LineItem {
 	}
 
 	public Double getGrossAmount() {
-		return grossAmount;
+		return this.grossAmount;
 	}
 
 	public void setGrossAmount(Double grossAmount) {
@@ -52,7 +50,7 @@ public class LineItem {
 	}
 
 	public Long getTaxRate() {
-		return taxRate;
+		return this.taxRate;
 	}
 
 	public void setTaxRate(Long taxRate) {
@@ -60,7 +58,7 @@ public class LineItem {
 	}
 
 	public String getCurrency() {
-		return currency;
+		return this.currency;
 	}
 
 	public void setCurrency(String currency) {
