@@ -1,8 +1,8 @@
 server:
-  port: 8081
+  port: 8082
 spring:
   application:
-    name: billing-service
+    name: shipping-service
   main:
     banner-mode: "off"
   datasource:
@@ -27,18 +27,3 @@ spring:
     serialization:
       write-dates-as-timestamps: false
       indent-output: true
-  kafka:
-    client-id: billing-service
-    bootstrap-servers:
-      - localhost:9092
-    template:
-      default-topic: order
-    #listener:
-    #  ack-mode: manual
-    producer:
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-    consumer:
-      group-id: payment
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      #enable-auto-commit: false

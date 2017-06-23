@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package at.free23.order.api;
 
@@ -16,14 +16,14 @@ public class OrderPayload extends TransactionPayload {
 
 	private List<LineItem> lineItems;
 
-	public OrderPayload(Long orderRef, String event, List<LineItem> lineItems){
+	public OrderPayload(Long orderRef, OrderEvent event, List<LineItem> lineItems) {
 		this.orderRef = orderRef;
-		this.event = event;
+		this.event = event.toString();
 		this.lineItems = lineItems;
 	}
-	
+
 	public List<LineItem> getLineItems() {
-		return lineItems;
+		return this.lineItems;
 	}
 
 	public void setLineItems(List<LineItem> lineItems) {
