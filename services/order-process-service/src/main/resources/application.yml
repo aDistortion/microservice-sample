@@ -1,0 +1,47 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: order-process-service
+  main:
+    banner-mode: "off"
+  datasource:
+    platform: h2
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+    driverClassName: org.h2.Driver
+    username: demoworkflow
+    password: demoworkflow
+    dbcp2:
+      test-while-idle: true
+      validation-query: SELECT 1
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  dao:
+    exceptiontranslation:
+      enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true
+camunda:
+  bpm:
+    filter:
+      create: All
+    job-execution:
+      enabled: true
+      core-pool-size: 10
+    database:
+      schema-update: "create-drop"
+    #bugfix, jpaVariableSerializer throws nasty bug when sending json objects from forms
+    jpa:
+      enabled: false
+    history-level: full
+    metrics:
+      enabled: true
+    #webapp:
+    #  index-redirect-enabled: true
+    default-serialization-format: application/json

@@ -29,8 +29,9 @@
 		<module>billing-service</module>
 		<module>shipping-service</module>
 		<module>stock-service</module>
+		<module>order-process-service</module>
 	</modules>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
