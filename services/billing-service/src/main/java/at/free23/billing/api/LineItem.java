@@ -1,20 +1,23 @@
 package at.free23.billing.api;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 @Entity
+@JsonTypeName(value="lineItem")
 public class LineItem {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column
-	private Long amount;
+	private Long quantity;
+	private Double netAmount;
+	private Double grossAmount;
+	private Long taxRate;
+	private String currency;
 
 	public Long getId() {
 		return id;
@@ -24,11 +27,44 @@ public class LineItem {
 		this.id = id;
 	}
 
-	public Long getAmount() {
-		return amount;
+	public Long getQuantity() {
+		return quantity;
 	}
 
-	public void setAmount(Long amount) {
-		this.amount = amount;
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
 	}
+
+	public Double getNetAmount() {
+		return netAmount;
+	}
+
+	public void setNetAmount(Double netAmount) {
+		this.netAmount = netAmount;
+	}
+
+	public Double getGrossAmount() {
+		return grossAmount;
+	}
+
+	public void setGrossAmount(Double grossAmount) {
+		this.grossAmount = grossAmount;
+	}
+
+	public Long getTaxRate() {
+		return taxRate;
+	}
+
+	public void setTaxRate(Long taxRate) {
+		this.taxRate = taxRate;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
 }

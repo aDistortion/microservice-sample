@@ -14,15 +14,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
 @Table(name="orderEntity")
-@JsonTypeInfo(
-	      use = JsonTypeInfo.Id.NAME, 
-	      include = As.PROPERTY, 
-	      property = "type")
+@JsonTypeName(value="order")
 public class Order {
 
 	@Id

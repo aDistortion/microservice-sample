@@ -19,7 +19,7 @@ import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 @Configuration
 public class KafkaAppConfig {
 	
-	@Value("spring.kafka.template.default-value")
+	@Value("${spring.kafka.template.default-topic}")
 	private String defaultTopic;
 	
 	@Bean

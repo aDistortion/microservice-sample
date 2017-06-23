@@ -36,5 +36,5 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       group-id: order
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       #enable-auto-commit: false

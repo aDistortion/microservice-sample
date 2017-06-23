@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleAfterCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
 
 import at.free23.order.api.Order;
+import at.free23.order.api.OrderPayload;
+import at.free23.order.api.TransactionPayload;
 
 /**
  * @author michael.vlasaty
@@ -25,11 +26,12 @@ public class OrderPlacementHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrderPlacementHandler.class);
 	
 	@Autowired
-	private KafkaTemplate<String, ?> template;
+	private KafkaTemplate<String, TransactionPayload> template;
 	
 	@HandleAfterCreate
 	public void onCreated(Order newOrder){
-		this.template.send(new GenericMessage<>(newOrder));
-		this.LOGGER.info("New order has been placed");
+		OrderPayload payload = new OrderPayload(newOrder.getId(), "ORDER_RCV", newOrder.getLineItems());
+		this.template.send("order",payload);
+		LOGGER.info("New order has been placed");
 	}
 }

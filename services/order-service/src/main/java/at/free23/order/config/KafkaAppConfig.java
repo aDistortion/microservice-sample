@@ -3,16 +3,22 @@
  */
 package at.free23.order.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.support.converter.StringJsonMessageConverter;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import at.free23.order.api.TransactionPayload;
+import at.free23.order.api.TransactionPayloadDeserializer;
 
 /**
  * @author michael.vlasaty
@@ -21,23 +27,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 public class KafkaAppConfig {
 	
-	@Value("spring.kafka.template.default-value")
-	private String defaultTopic;
+	@Autowired
+	private KafkaProperties kafkaProps;
 	
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, String> jsonKafkaListenerContainerFactory(ConsumerFactory<String, String> consumerFactory, ObjectMapper mapper) {
-		ConcurrentKafkaListenerContainerFactory<String, String> factory =
+	public ConcurrentKafkaListenerContainerFactory<String, TransactionPayload> jsonKafkaListenerContainerFactory(TransactionPayloadDeserializer deserializer) {
+		ConcurrentKafkaListenerContainerFactory<String, TransactionPayload> factory =
 				new ConcurrentKafkaListenerContainerFactory<>();
-		factory.setConsumerFactory(consumerFactory);
-		factory.setMessageConverter(new StringJsonMessageConverter(mapper));
+		
+		DefaultKafkaConsumerFactory<String, TransactionPayload> cFactory = new DefaultKafkaConsumerFactory<>(kafkaProps.buildConsumerProperties());
+		cFactory.setKeyDeserializer(new StringDeserializer());
+		cFactory.setValueDeserializer(deserializer);
+		factory.setConsumerFactory(cFactory);
 		return factory;
 	}
 	
 	@Bean
-	public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory, ObjectMapper mapper) {
-		KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(producerFactory);
-		kafkaTemplate.setMessageConverter(new StringJsonMessageConverter(mapper));
-		kafkaTemplate.setDefaultTopic(defaultTopic);
+	public KafkaTemplate<String, TransactionPayload> kafkaTemplate(ObjectMapper mapper) {
+		DefaultKafkaProducerFactory<String, TransactionPayload> pFactory = new DefaultKafkaProducerFactory<>(this.kafkaProps.buildProducerProperties());
+		pFactory.setKeySerializer(new StringSerializer());
+		pFactory.setValueSerializer(new JsonSerializer<TransactionPayload>(mapper));
+		
+		KafkaTemplate<String, TransactionPayload> kafkaTemplate = new KafkaTemplate<>(pFactory);
+		kafkaTemplate.setDefaultTopic(this.kafkaProps.getTemplate().getDefaultTopic());
 		return kafkaTemplate;
 	}
 	
