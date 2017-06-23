@@ -45,3 +45,6 @@ camunda:
     #webapp:
     #  index-redirect-enabled: true
     default-serialization-format: application/json
+    admin-user:
+      id: admin
+      password: demo

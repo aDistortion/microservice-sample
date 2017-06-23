@@ -67,33 +67,33 @@
 	      <groupId>org.camunda.bpm.extension.springboot</groupId>
 	      <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
 	    </dependency>
-<!-- 	    <dependency> -->
-<!-- 		  <groupId>org.camunda.bpm.dmn</groupId> -->
-<!-- 		  <artifactId>camunda-engine-dmn</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 	    <dependency> -->
-<!-- 		  <groupId>org.camunda.spin</groupId> -->
-<!-- 		  <artifactId>camunda-spin-core</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 		  <groupId>org.camunda.spin</groupId> -->
-<!-- 		  <artifactId>camunda-spin-dataformat-json-jackson</artifactId> -->
-<!-- 		  <exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>com.jayway.jsonpath</groupId> -->
-<!-- 					<artifactId>json-path</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 		  </exclusions> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 		  <groupId>org.camunda.bpm</groupId> -->
-<!-- 		  <artifactId>camunda-engine-plugin-spin</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.jayway.jsonpath</groupId> -->
-<!-- 		    <artifactId>json-path</artifactId> -->
-<!-- 		    <version>0.9.1</version> -->
-<!-- 		</dependency> -->
+	    <dependency>
+		  <groupId>org.camunda.bpm.dmn</groupId>
+		  <artifactId>camunda-engine-dmn</artifactId>
+		</dependency>
+	    <dependency>
+		  <groupId>org.camunda.spin</groupId>
+		  <artifactId>camunda-spin-core</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>org.camunda.spin</groupId>
+		  <artifactId>camunda-spin-dataformat-json-jackson</artifactId>
+		  <exclusions>
+				<exclusion>
+					<groupId>com.jayway.jsonpath</groupId>
+					<artifactId>json-path</artifactId>
+				</exclusion>
+		  </exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>org.camunda.bpm</groupId>
+		  <artifactId>camunda-engine-plugin-spin</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.jayway.jsonpath</groupId>
+		    <artifactId>json-path</artifactId>
+		    <version>0.9.1</version>
+		</dependency>
 	</dependencies>
 
 </project>
