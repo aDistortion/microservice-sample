@@ -24,7 +24,7 @@ public class StockItemInitializer {
 	@PostConstruct
 	public void init() {
 		this.stockRepo.save(new StockItem(1L, 10L));
-		this.stockRepo.save(new StockItem(2L, 5L));
+		this.stockRepo.save(new StockItem(2L, 20L));
 		this.stockRepo.save(new StockItem(3L, 13L));
 		this.stockRepo.save(new StockItem(4L, 16L));
 		this.stockRepo.save(new StockItem(5L, 23L));

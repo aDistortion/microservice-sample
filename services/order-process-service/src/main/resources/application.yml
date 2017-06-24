@@ -27,6 +27,18 @@ spring:
     serialization:
       write-dates-as-timestamps: false
       indent-output: true
+  kafka:
+    client-id: order-process-service
+    bootstrap-servers:
+      - localhost:9092
+    template:
+      default-topic: order
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: order-process
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 camunda:
   bpm:
     filter:
