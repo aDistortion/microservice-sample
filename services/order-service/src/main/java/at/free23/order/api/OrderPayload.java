@@ -14,7 +14,7 @@ public class OrderPayload extends TransactionPayload {
 
 	private List<LineItem> lineItems;
 
-	public OrderPayload(Long orderRef, OrderEvent event, List<LineItem> lineItems) {
+	public OrderPayload(String orderRef, OrderEvent event, List<LineItem> lineItems) {
 		this.orderRef = orderRef;
 		this.event = event.toString();
 		this.lineItems = lineItems;

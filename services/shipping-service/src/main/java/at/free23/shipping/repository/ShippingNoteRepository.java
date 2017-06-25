@@ -12,5 +12,5 @@ import at.free23.shipping.api.ShippingNote;
  *
  */
 public interface ShippingNoteRepository extends PagingAndSortingRepository<ShippingNote, Long> {
-	public ShippingNote findByOrderRef(Long orderRef);
+	public ShippingNote findByOrderRef(String orderRef);
 }

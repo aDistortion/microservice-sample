@@ -16,5 +16,5 @@ import at.free23.stock.api.ReservedItem;
  */
 @RepositoryRestResource(collectionResourceRel = "reservedItem", path = "reservedItem")
 public interface ReservedItemRepository extends PagingAndSortingRepository<ReservedItem, ReservedId> {
-	public Iterable<ReservedItem> findByIdOrderRef(@Param("orderRef") Long orderRef);
+	public Iterable<ReservedItem> findByIdOrderRef(@Param("orderRef") String orderRef);
 }

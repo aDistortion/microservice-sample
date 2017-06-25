@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package at.free23.billing.api;
 
@@ -26,24 +26,24 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Payment {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pidgen")
-    @SequenceGenerator(name = "pidgen", sequenceName = "payment_id_sequence", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pidgen")
+	@SequenceGenerator(name = "pidgen", sequenceName = "payment_id_sequence", allocationSize = 1, initialValue = 1)
 	private Long id;
-	
-	private Long orderId;
+
+	private String orderId;
 	private LocalDateTime recieved;
-	
+
 	private Double grossTotal;
 	private Double netTotal;
 	private Long taxRate;
 	private String currency;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<LineItem> lineItems;
-	
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -51,23 +51,23 @@ public class Payment {
 	}
 
 	public LocalDateTime getRecieved() {
-		return recieved;
+		return this.recieved;
 	}
 
 	public void setRecieved(LocalDateTime recieved) {
 		this.recieved = recieved;
 	}
 
-	public Long getOrderId() {
-		return orderId;
+	public String getOrderId() {
+		return this.orderId;
 	}
 
-	public void setOrderId(Long orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 
 	public Double getGrossTotal() {
-		return grossTotal;
+		return this.grossTotal;
 	}
 
 	public void setGrossTotal(Double grossTotal) {
@@ -75,7 +75,7 @@ public class Payment {
 	}
 
 	public Double getNetTotal() {
-		return netTotal;
+		return this.netTotal;
 	}
 
 	public void setNetTotal(Double netTotal) {
@@ -83,7 +83,7 @@ public class Payment {
 	}
 
 	public Long getTaxRate() {
-		return taxRate;
+		return this.taxRate;
 	}
 
 	public void setTaxRate(Long taxRate) {
@@ -91,7 +91,7 @@ public class Payment {
 	}
 
 	public String getCurrency() {
-		return currency;
+		return this.currency;
 	}
 
 	public void setCurrency(String currency) {
@@ -99,7 +99,7 @@ public class Payment {
 	}
 
 	public List<LineItem> getLineItems() {
-		return lineItems;
+		return this.lineItems;
 	}
 
 	public void setLineItems(List<LineItem> lineItems) {

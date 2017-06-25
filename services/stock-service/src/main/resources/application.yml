@@ -32,7 +32,7 @@ spring:
     bootstrap-servers:
       - localhost:9092
     template:
-      default-topic: shipping
+      default-topic: order
     producer:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

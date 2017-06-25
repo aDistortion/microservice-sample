@@ -19,7 +19,7 @@ public class ShippingNote {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private Long orderRef;
+	private String orderRef;
 
 	private String address;
 
@@ -29,7 +29,7 @@ public class ShippingNote {
 
 	}
 
-	public ShippingNote(Long orderRef) {
+	public ShippingNote(String orderRef) {
 		this.orderRef = orderRef;
 	}
 
@@ -41,11 +41,11 @@ public class ShippingNote {
 		this.id = id;
 	}
 
-	public Long getOrderRef() {
+	public String getOrderRef() {
 		return this.orderRef;
 	}
 
-	public void setOrderRef(Long orderRef) {
+	public void setOrderRef(String orderRef) {
 		this.orderRef = orderRef;
 	}
 
@@ -58,7 +58,7 @@ public class ShippingNote {
 	}
 
 	public Boolean getShipped() {
-		return shipped;
+		return this.shipped;
 	}
 
 	public void setShipped(Boolean shipped) {

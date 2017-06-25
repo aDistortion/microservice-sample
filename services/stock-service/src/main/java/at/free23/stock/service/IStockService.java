@@ -8,7 +8,7 @@ package at.free23.stock.service;
  *
  */
 public interface IStockService {
-	public void reserveItem(Long orderRef, Long itemId, Long quantity);
+	public void reserveItem(String orderRef, Long itemId, Long quantity);
 
-	public void bookShipping(Long orderRef);
+	public void bookShipping(String orderRef);
 }

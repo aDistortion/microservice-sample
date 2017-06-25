@@ -16,7 +16,7 @@ public class ReservedIdConverter implements Converter<String, ReservedId> {
 	@Override
 	public ReservedId convert(String source) {
 		final String[] ids = source.split("-");
-		return new ReservedId(Long.valueOf(ids[1]), Long.valueOf(ids[0]));
+		return new ReservedId(Long.valueOf(ids[1]), ids[0]);
 	}
 
 }

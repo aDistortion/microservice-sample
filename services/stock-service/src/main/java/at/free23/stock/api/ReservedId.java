@@ -19,13 +19,13 @@ public class ReservedId implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long itemId;
-	private Long orderRef;
+	private String orderRef;
 
 	public ReservedId() {
 
 	}
 
-	public ReservedId(Long itemId, Long orderRef) {
+	public ReservedId(Long itemId, String orderRef) {
 		super();
 		this.itemId = itemId;
 		this.orderRef = orderRef;
@@ -39,11 +39,11 @@ public class ReservedId implements Serializable {
 		this.itemId = itemId;
 	}
 
-	public Long getOrderRef() {
+	public String getOrderRef() {
 		return this.orderRef;
 	}
 
-	public void setOrderRef(Long orderRef) {
+	public void setOrderRef(String orderRef) {
 		this.orderRef = orderRef;
 	}
 

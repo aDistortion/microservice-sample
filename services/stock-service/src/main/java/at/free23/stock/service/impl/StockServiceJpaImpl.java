@@ -26,19 +26,19 @@ public class StockServiceJpaImpl implements IStockService {
 	private ReservedItemRepository reservedRepo;
 
 	@Override
-	public void reserveItem(Long orderRef, Long itemId, Long quantity) {
+	public void reserveItem(String orderRef, Long itemId, Long quantity) {
 		final StockItem onStock = this.stockRepo.findOne(itemId);
 		if (onStock != null && onStock.getStored() >= quantity) {
 			onStock.setStored(onStock.getStored() - quantity);
 			this.stockRepo.save(onStock);
 			this.reservedRepo.save(new ReservedItem(itemId, orderRef, quantity));
 		} else {
-			throw new IllegalStateException("Stock too low!");
+			throw new IllegalStateException("Stock too low! " + onStock.getId());
 		}
 	}
 
 	@Override
-	public void bookShipping(Long orderRef) {
+	public void bookShipping(String orderRef) {
 		final Iterable<ReservedItem> items = this.reservedRepo.findByIdOrderRef(orderRef);
 		items.forEach(i -> this.reservedRepo.delete(i.getId()));
 	}

@@ -8,6 +8,11 @@ import java.util.List;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.variable.Variables;
 import org.camunda.bpm.engine.variable.Variables.SerializationDataFormats;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
@@ -32,11 +37,21 @@ public class CreateOrder extends AbstractBaseTask {
 		}
 		order.setLineItems(lineItems);
 
-		final Order createdOrder = this.restTemplate.postForObject("http://localhost:8080/order", order, Order.class);
-		this.logger.info("Created order " + createdOrder.getId());
+		final HttpEntity<Order> request = new HttpEntity<>(order);
+		final ResponseEntity<Resource<Order>> response = this.restTemplate.exchange("http://localhost:8080/order",
+				HttpMethod.POST,
+				request,
+				new ParameterizedTypeReference<Resource<Order>>() {
+		});
+		final Resource<Order> orderResource = response.getBody();
+		final Order createdOrder = orderResource.getContent();
+
+		// TODO: id null?
+		this.logger.info("Created order " + createdOrder.getOrderRef());
 		exec.setVariable("order",
-				Variables.objectValue(order).serializationDataFormat(SerializationDataFormats.JSON).create());
-		exec.setVariable("orderId", order.getId());
+				Variables.objectValue(createdOrder).serializationDataFormat(SerializationDataFormats.JSON)
+				.create());
+		exec.setVariable("orderRef", createdOrder.getOrderRef());
 	}
 
 }

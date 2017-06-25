@@ -19,16 +19,18 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Order {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgen")
-    @SequenceGenerator(name = "idgen", sequenceName = "order_id_sequence", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgen")
+	@SequenceGenerator(name = "idgen", sequenceName = "order_id_sequence", allocationSize = 1, initialValue = 1)
 	private Long id;
-	
+
+	private String orderRef;
+
 	@OneToMany(cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<LineItem> lineItems;
 
 	private boolean paymentRecieved = false;
-	
+
 	public Long getId() {
 		return this.id;
 	}
@@ -51,5 +53,13 @@ public class Order {
 
 	public void setPaymentRecieved(boolean paymentRecieved) {
 		this.paymentRecieved = paymentRecieved;
+	}
+
+	public String getOrderRef() {
+		return orderRef;
+	}
+
+	public void setOrderRef(String orderRef) {
+		this.orderRef = orderRef;
 	}
 }

@@ -23,10 +23,10 @@ public class ReservedItemInitializer {
 
 	@PostConstruct
 	public void init() {
-		this.itemRepo.save(new ReservedItem(1L, 1L, 2L));
-		this.itemRepo.save(new ReservedItem(2L, 1L, 4L));
-		this.itemRepo.save(new ReservedItem(3L, 1L, 1L));
-		this.itemRepo.save(new ReservedItem(1L, 2L, 2L));
-		this.itemRepo.save(new ReservedItem(3L, 2L, 1L));
+		this.itemRepo.save(new ReservedItem(1L, "123", 2L));
+		this.itemRepo.save(new ReservedItem(2L, "123", 4L));
+		this.itemRepo.save(new ReservedItem(3L, "123", 1L));
+		this.itemRepo.save(new ReservedItem(1L, "123", 2L));
+		this.itemRepo.save(new ReservedItem(3L, "123", 1L));
 	}
 }

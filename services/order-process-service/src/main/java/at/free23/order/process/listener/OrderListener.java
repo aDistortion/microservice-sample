@@ -30,12 +30,12 @@ public class OrderListener {
 			break;
 		case PAYMENT_RCV:
 			this.runtimeService.createMessageCorrelation(OrderEvent.PAYMENT_RCV.toString())
-			.processDefinitionId("orderProcess").processInstanceVariableEquals("orderId", payload.getOrderRef())
+			.processInstanceVariableEquals("orderRef", payload.getOrderRef())
 			.setVariable("paymentRecieved", true).correlateExclusively();
 			break;
 		case SHIPPING_BOOKED:
 			this.runtimeService.createMessageCorrelation(OrderEvent.SHIPPING_BOOKED.toString())
-			.processDefinitionId("orderProcess").processInstanceVariableEquals("orderId", payload.getOrderRef())
+			.processInstanceVariableEquals("orderRef", payload.getOrderRef())
 			.setVariable("shippingBooked", true).correlateExclusively();
 			break;
 		case SHIPPING_DELAYED:

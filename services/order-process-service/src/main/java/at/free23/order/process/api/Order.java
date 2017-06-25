@@ -4,17 +4,19 @@ import java.util.List;
 
 public class Order {
 
-	private Long id;
-	
+	private String id;
+
+	private String orderRef;
+
 	private List<LineItem> lineItems;
 
 	private boolean paymentRecieved = false;
-	
-	public Long getId() {
+
+	public String getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -32,5 +34,13 @@ public class Order {
 
 	public void setPaymentRecieved(boolean paymentRecieved) {
 		this.paymentRecieved = paymentRecieved;
+	}
+
+	public String getOrderRef() {
+		return orderRef;
+	}
+
+	public void setOrderRef(String orderRef) {
+		this.orderRef = orderRef;
 	}
 }

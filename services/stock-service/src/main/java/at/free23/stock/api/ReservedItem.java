@@ -21,7 +21,7 @@ public class ReservedItem {
 	public ReservedItem() {
 	}
 
-	public ReservedItem(Long itemId, Long orderRef, Long amount) {
+	public ReservedItem(Long itemId, String orderRef, Long amount) {
 		this.id = new ReservedId(itemId, orderRef);
 		this.amount = amount;
 	}

@@ -17,13 +17,14 @@ package at.free23.order.api;
 // })
 public class TransactionPayload {
 
-	protected Long orderRef;
+	protected String orderRef;
 	protected String event;
 
-	public Long getOrderRef() {
+	public String getOrderRef() {
 		return this.orderRef;
 	}
-	public void setOrderRef(Long orderRef) {
+
+	public void setOrderRef(String orderRef) {
 		this.orderRef = orderRef;
 	}
 	public String getEvent() {

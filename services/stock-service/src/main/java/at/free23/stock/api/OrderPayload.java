@@ -16,7 +16,7 @@ public class OrderPayload extends TransactionPayload {
 	public OrderPayload() {
 	}
 
-	public OrderPayload(Long orderRef, OrderEvent event) {
+	public OrderPayload(String orderRef, OrderEvent event) {
 		this.orderRef = orderRef;
 		this.event = event.toString();
 	}

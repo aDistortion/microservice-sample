@@ -7,9 +7,9 @@
     <bpmn:laneSet>
       <bpmn:lane id="Lane_0eeq75g" name="System">
         <bpmn:flowNodeRef>Task_recieveShipping</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_1acclic</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_cancleOrder</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_createOrder</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1acclic</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_success</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_180uezo" name="User">
@@ -23,11 +23,11 @@
     <bpmn:sequenceFlow id="SequenceFlow_0oi0eua" sourceRef="Task_confirmOrder" targetRef="Task_createOrder" />
     <bpmn:sequenceFlow id="SequenceFlow_14ui5w6" sourceRef="StartEvent_1" targetRef="Task_confirmOrder" />
     <bpmn:sequenceFlow id="SequenceFlow_0to5ob0" sourceRef="Task_createOrder" targetRef="SubProcess_1uw46a9" />
-    <bpmn:userTask id="Task_confirmOrder" name="Confirm Order Placement">
+    <bpmn:userTask id="Task_confirmOrder" name="Confirm Order Placement" camunda:assignee="${initUser}">
       <bpmn:incoming>SequenceFlow_14ui5w6</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0oi0eua</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:startEvent id="StartEvent_1" name="Check in">
+    <bpmn:startEvent id="StartEvent_1" name="Check in" camunda:initiator="initUser">
       <bpmn:outgoing>SequenceFlow_14ui5w6</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1mn647h" sourceRef="Task_cancleOrder" targetRef="EndEvent_1acclic" />
@@ -40,7 +40,7 @@
     <bpmn:endEvent id="EndEvent_1acclic" name="Cancelled">
       <bpmn:incoming>SequenceFlow_1mn647h</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sendTask id="Task_cancleOrder" name="Cancel Order" camunda:delegateExpression="${canceOrder}">
+    <bpmn:sendTask id="Task_cancleOrder" name="Cancel Order" camunda:delegateExpression="${cancelOrder}">
       <bpmn:incoming>SequenceFlow_0nb3hxi</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0zbvvsb</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mn647h</bpmn:outgoing>
@@ -54,11 +54,11 @@
     <bpmn:transaction id="SubProcess_1uw46a9">
       <bpmn:incoming>SequenceFlow_0to5ob0</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1pkgv80</bpmn:outgoing>
-      <bpmn:userTask id="Task_provideAddressData" name="Provide Address/Invoicing Data">
+      <bpmn:userTask id="Task_provideAddressData" name="Provide Address/Invoicing Data" camunda:assignee="${initUser}">
         <bpmn:incoming>SequenceFlow_19mtvha</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_0irswlu</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="Task_choosePaymentMethod" name="Choose Payment Method">
+      <bpmn:userTask id="Task_choosePaymentMethod" name="Choose Payment Method" camunda:assignee="${initUser}">
         <bpmn:incoming>SequenceFlow_0irswlu</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_023fx4b</bpmn:outgoing>
       </bpmn:userTask>
@@ -77,26 +77,26 @@
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="SequenceFlow_0slp355" sourceRef="Task_recievePayment" targetRef="EndEvent_010d1ip" />
     </bpmn:transaction>
+    <bpmn:endEvent id="EndEvent_success" name="Shipped">
+      <bpmn:incoming>SequenceFlow_0rv4cgu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_cancel" name="Cancel" attachedToRef="SubProcess_1uw46a9">
+      <bpmn:outgoing>SequenceFlow_0zbvvsb</bpmn:outgoing>
+      <bpmn:cancelEventDefinition />
+    </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="BoundaryEvent_paymentOverdue" name="Payment overdue" attachedToRef="SubProcess_1uw46a9">
       <bpmn:outgoing>SequenceFlow_0nb3hxi</bpmn:outgoing>
       <bpmn:timerEventDefinition>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT15M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="BoundaryEvent_cancel" name="Cancel" attachedToRef="SubProcess_1uw46a9">
-      <bpmn:outgoing>SequenceFlow_0zbvvsb</bpmn:outgoing>
-      <bpmn:cancelEventDefinition />
-    </bpmn:boundaryEvent>
-    <bpmn:endEvent id="EndEvent_success" name="Shipped">
-      <bpmn:incoming>SequenceFlow_0rv4cgu</bpmn:incoming>
-    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:message id="Message_1g6ak2f" name="PAYMENT_RCV" />
   <bpmn:message id="Message_0ceszqx" name="SHIPPING_BOOKED" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0xt4yv5">
       <bpmndi:BPMNShape id="Participant_0aw9mk8_di" bpmnElement="Participant_orderProcess">
-        <dc:Bounds x="128" y="-44" width="923" height="394" />
+        <dc:Bounds x="128" y="-44" width="972" height="384" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="193" y="19" width="36" height="36" />
@@ -143,10 +143,10 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Lane_0eeq75g_di" bpmnElement="Lane_0eeq75g">
-        <dc:Bounds x="158" y="150" width="893" height="200" />
+        <dc:Bounds x="158" y="150" width="942" height="190" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_180uezo_di" bpmnElement="Lane_180uezo">
-        <dc:Bounds x="158" y="-44" width="893" height="194" />
+        <dc:Bounds x="158" y="-44" width="942" height="194" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_14ui5w6_di" bpmnElement="SequenceFlow_14ui5w6">
         <di:waypoint xsi:type="dc:Point" x="229" y="37" />

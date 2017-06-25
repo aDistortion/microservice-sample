@@ -8,6 +8,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
 import at.free23.order.api.LineItem;
+import at.free23.order.api.Order;
 
 /**
  * @author michael.vlasaty
@@ -17,6 +18,6 @@ import at.free23.order.api.LineItem;
 public class RepoAppConfig extends RepositoryRestConfigurerAdapter {
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-		config.exposeIdsFor(LineItem.class);
+		config.exposeIdsFor(Order.class, LineItem.class);
 	}
 }
