@@ -27,4 +27,7 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<finalName>shipping-service</finalName>
+	</build>
 </project>

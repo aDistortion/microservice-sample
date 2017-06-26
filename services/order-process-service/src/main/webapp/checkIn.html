@@ -1,0 +1,66 @@
+<form role="form" name="invoiceForm">
+	<script cam-script type="text/form-script">
+		
+		var lineItems = $scope.lineItems = [];
+		var mockItems = $scope.mockItems = [
+			{
+				'id': '1', 'name': 'Abaza', 'price': '30'
+			},
+			{
+				'id': '2', 'name': 'Alpine', 'price': '10'
+			},
+			{
+				'id': '3', 'name': 'Asmari', 'price': '95'
+			},
+		];
+  		camForm.on('form-loaded', function() {
+			camForm.variableManager.createVariable({
+				name: 'lineItems',
+				type: 'json',
+				value: lineItems
+			});
+  		});
+		camForm.on('submit', function(ev){
+			angular.forEach($scope.lineItems, function(item) { 
+        		delete item.$$hashKey; 
+      		});
+			camForm.variableManager.variableValue('lineItems', $scope.lineItems);
+		});
+	</script>
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 style="text-align: center;">Line Items</h2>
+			<div class="form-group" id="mockItemSelect-group">
+				<label for="mockItemSelect" class="control-label">Select Item</label>
+				<div class="controls">
+			        <select class="form-control"
+			        		id="mockItem"
+			           		name="mockItem"
+			           		ng-model="selectedItem"
+			           		ng-options="lineItem.name+' '+lineItem.price+' EUR' for lineItem in mockItems"
+			           		ng-change="addLineItem()"
+			           		>
+			           		<option value=""></option>
+			        </select>
+			      	<script cam-script type="text/form-script">
+						$scope.addLineItem = function(e) {
+							let selectedItem = $scope.selectedItem;
+							let lineItems = $scope.lineItems;
+							lineItems.push(selectedItem);
+						};
+					</script>
+		      	</div>
+			</div>
+			<div class="form-group" ng-repeat="lineItem in lineItems">
+				<div class="input-group">
+			      <div class="input-group-addon">{{lineItem.name}}</div>
+			      <input 	type="number"
+			      			class="form-control"
+			      			id="lineItemAmount"
+			      			placeholder="Amount"
+			      			ng-model="lineItem.quantity" />
+			    </div>
+			</div>
+		</div>
+	</div>
+</form>

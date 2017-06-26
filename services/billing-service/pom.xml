@@ -26,5 +26,8 @@
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 	</dependencies>
-
+	
+	<build>
+		<finalName>billing-service</finalName>
+	</build>
 </project>

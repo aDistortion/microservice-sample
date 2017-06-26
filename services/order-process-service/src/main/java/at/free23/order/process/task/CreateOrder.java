@@ -31,12 +31,14 @@ public class CreateOrder extends AbstractBaseTask {
 	public void execute(DelegateExecution exec) throws Exception {
 		final Order order = new Order();
 		order.setPaymentRecieved(false);
-		final List<LineItem> lineItems = Lists.newArrayList();
-		for (int i = 0; i < 4; i++) {
-			lineItems.add(new LineItem(Integer.toUnsignedLong(i), 5L));
+		List<LineItem> lineItems = (List<LineItem>) exec.getVariable("lineItems");
+		if (lineItems == null) {
+			lineItems = Lists.newArrayList();
+			for (int i = 0; i < 4; i++) {
+				lineItems.add(new LineItem(Integer.toUnsignedLong(i), 5L));
+			}
 		}
 		order.setLineItems(lineItems);
-
 		final HttpEntity<Order> request = new HttpEntity<>(order);
 		final ResponseEntity<Resource<Order>> response = this.restTemplate.exchange("http://localhost:8080/order",
 				HttpMethod.POST,

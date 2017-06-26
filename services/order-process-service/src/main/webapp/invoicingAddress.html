@@ -1,0 +1,37 @@
+<form role="form" name="invoiceForm">
+	<script cam-script type="text/form-script">
+  		camForm.on('form-loaded', function() {
+			camForm.variableManager.fetchVariable('order');
+  		});
+  		camForm.on('variables-fetched', function() {
+			$scope.position = camForm.variableManager.variableValue('position');
+  		});
+		camForm.on('variables-restored', function() {
+			$scope.position = camForm.variableManager.variableValue('position');
+		});
+		camForm.on('submit', function(ev){
+			camForm.variableManager.variableValue('boderoPos', $scope.boderoPos);
+		});
+	</script>
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 style="text-align: center;">Line Item (Position)</h2>
+			<div class="form-group" id="sachkonto-group">
+				<label for="sachkonto" class="control-label">Sachkonto</label>
+				<input id="sachkonto"
+					   ng-model="position.sachkonto"
+					   class="form-control">
+			</div>
+			<div class="form-group" id="lineItemType-group">
+				<label for="lineItemType" class="control-label">Line Item Type</label>
+				<select id="lineItemType"
+					   ng-model="position.type"
+					   class="form-control"
+					   required>
+					   <option value="POSITION">Position</option>
+					   <option value="COST_CENTER">Cost Center</option>
+			   </select>
+			</div>
+		</div>
+	</div>
+</form>
