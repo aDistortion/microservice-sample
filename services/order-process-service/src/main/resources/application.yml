@@ -1,8 +1,9 @@
 server:
   port: 8084
+  context-path: /order-process
 spring:
   application:
-    name: order-process-service
+    name: order-process
   main:
     banner-mode: "off"
   datasource:
@@ -54,8 +55,8 @@ camunda:
     history-level: full
     metrics:
       enabled: true
-    #webapp:
-    #  index-redirect-enabled: true
+    webapp:
+      index-redirect-enabled: true
     default-serialization-format: application/json
     admin-user:
       id: admin

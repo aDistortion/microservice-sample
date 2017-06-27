@@ -5,14 +5,13 @@ export default class LoginButton extends React.Component {
   render() {
     const msg = this.props.isAuthenticated ? 'Logout' : 'Login' ;
     return(
-     <AuthButton msg={msg} handleClick={this.props.handleClick}/>
+     <AuthButton label={msg} handleClick={this.props.handleClick}/>
     )}
 }
 class AuthButton extends React.Component {
   render(){
     const handleClick = this.props.handleClick;
     return(
-      <Link to="/" className="btn btn-success" onClick={handleClick}>{this.props.msg}</Link>
+      <Link to="/" onClick={handleClick}>{this.props.label}</Link>
     )}
 }
-// LoginButton = withRouter(LoginBtn);
