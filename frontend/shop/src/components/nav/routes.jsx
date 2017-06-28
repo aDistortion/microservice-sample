@@ -8,7 +8,7 @@ export class NavbarLinksList extends React.Component {
   }
 
   filterByAuthenticated(route){
-    return route.authRequired == this.props.authRequired;
+    return route.visible && route.authRequired == this.props.authRequired;
   }
 
   render(){

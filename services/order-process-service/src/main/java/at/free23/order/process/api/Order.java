@@ -2,6 +2,9 @@ package at.free23.order.process.api;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
 	private String id;
@@ -37,7 +40,7 @@ public class Order {
 	}
 
 	public String getOrderRef() {
-		return orderRef;
+		return this.orderRef;
 	}
 
 	public void setOrderRef(String orderRef) {

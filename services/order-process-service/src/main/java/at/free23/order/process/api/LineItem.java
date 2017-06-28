@@ -1,5 +1,8 @@
 package at.free23.order.process.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LineItem {
 
 	private Long id;

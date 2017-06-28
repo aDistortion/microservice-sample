@@ -15,7 +15,7 @@ export default class AppRouter extends React.Component {
   }
 
   handleLogin(){
-    this.httpClient.get('http://shop.sample.com/order-process/rest/engine/default/user/admin/profile', (res) => (this.setState({isAuthenticated: true, profile: res})));
+    this.httpClient.get('/order-process/rest/engine/default/user/admin/profile', (res) => (this.setState({isAuthenticated: true, profile: res})));
   }
 
   handleLogout(){
