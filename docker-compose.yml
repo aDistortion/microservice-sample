@@ -1,7 +1,27 @@
 version: '2'
 services:
+  consul:
+    command: -server -bootstrap
+    image: progrium/consul:latest
+    container_name: 'consul'
+    ports:
+      - "8500:8500"
+    environment:
+      SERVICE_53_IGNORE: 'yes'
+      SERVICE_8300_IGNORE: 'yes'
+      SERVICE_8301_IGNORE: 'yes'
+      SERVICE_8302_IGNORE: 'yes'
+      SERVICE_8400_IGNORE: 'yes'
+      SERVICE_8500_NAME: 'consul-admin_infra'
+  registrator:
+    command: "-internal consul://consul:8500"
+    image: gliderlabs/registrator:latest
+    container_name: 'registrator'
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
   web:
     build: ./docker/nginx
+    container_name: 'web'
     volumes:
     - ./shared/www/shop:/var/www/shop
     ports:
