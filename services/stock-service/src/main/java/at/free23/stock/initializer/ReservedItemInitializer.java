@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import at.free23.stock.api.ReservedItem;
+import at.free23.stock.model.ReservedItem;
 import at.free23.stock.repository.ReservedItemRepository;
 
 /**

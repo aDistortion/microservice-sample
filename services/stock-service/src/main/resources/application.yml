@@ -38,3 +38,10 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       group-id: stock
+  cloud:
+    consul:
+      enabled: false
+      host: consul
+      port: 8500
+      discovery:
+        fail-fast: false

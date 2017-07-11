@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import at.free23.stock.api.StockItem;
+import at.free23.stock.model.StockItem;
 import at.free23.stock.repository.StockItemRepository;
 
 /**
@@ -23,10 +23,8 @@ public class StockItemInitializer {
 
 	@PostConstruct
 	public void init() {
-		this.stockRepo.save(new StockItem(1L, 10L));
-		this.stockRepo.save(new StockItem(2L, 20L));
-		this.stockRepo.save(new StockItem(3L, 13L));
-		this.stockRepo.save(new StockItem(4L, 16L));
-		this.stockRepo.save(new StockItem(5L, 23L));
+		this.stockRepo.save(new StockItem(1L, 10L, 5D));
+		this.stockRepo.save(new StockItem(2L, 20L, 3D));
+		this.stockRepo.save(new StockItem(3L, 13L, 1D));
 	}
 }

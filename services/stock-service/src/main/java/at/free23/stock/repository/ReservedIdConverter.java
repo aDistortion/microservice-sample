@@ -5,7 +5,7 @@ package at.free23.stock.repository;
 
 import org.springframework.core.convert.converter.Converter;
 
-import at.free23.stock.api.ReservedId;
+import at.free23.stock.model.ReservedId;
 
 /**
  * @author michael.vlasaty

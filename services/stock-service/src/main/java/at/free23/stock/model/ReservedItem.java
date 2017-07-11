@@ -1,7 +1,7 @@
 /**
  *
  */
-package at.free23.stock.api;
+package at.free23.stock.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -17,6 +17,8 @@ public class ReservedItem {
 	private ReservedId id;
 
 	private Long amount;
+
+	private boolean shippingBooked = false;
 
 	public ReservedItem() {
 	}
@@ -40,5 +42,13 @@ public class ReservedItem {
 
 	public void setAmount(Long amount) {
 		this.amount = amount;
+	}
+
+	public boolean isShippingBooked() {
+		return this.shippingBooked;
+	}
+
+	public void setShippingBooked(boolean shippingBooked) {
+		this.shippingBooked = shippingBooked;
 	}
 }

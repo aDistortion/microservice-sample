@@ -8,8 +8,8 @@ import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
-import at.free23.stock.api.ReservedItem;
-import at.free23.stock.api.StockItem;
+import at.free23.stock.model.ReservedItem;
+import at.free23.stock.model.StockItem;
 import at.free23.stock.repository.ReservedIdConverter;
 
 /**

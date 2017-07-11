@@ -1,13 +1,14 @@
 /**
  *
  */
-package at.free23.billing.api;
+package at.free23.billing.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,32 +16,36 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * @author michael.vlasaty
  *
  */
 @Entity
-public class Payment {
+public class Invoice {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pidgen")
 	@SequenceGenerator(name = "pidgen", sequenceName = "payment_id_sequence", allocationSize = 1, initialValue = 1)
 	private Long id;
 
-	private String orderId;
+	private String orderRef;
 	private LocalDateTime recieved;
 
+	private String currency;
 	private Double grossTotal;
 	private Double netTotal;
-	private Long taxRate;
-	private String currency;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<LineItem> lineItems;
+	@OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	private List<Position> positions;
+
+	public Invoice() {
+
+	}
+
+	public Invoice(String orderRef) {
+		this.orderRef = orderRef;
+	}
 
 	public Long getId() {
 		return this.id;
@@ -58,12 +63,12 @@ public class Payment {
 		this.recieved = recieved;
 	}
 
-	public String getOrderId() {
-		return this.orderId;
+	public String getOrderRef() {
+		return this.orderRef;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setOrderRef(String orderRef) {
+		this.orderRef = orderRef;
 	}
 
 	public Double getGrossTotal() {
@@ -82,14 +87,6 @@ public class Payment {
 		this.netTotal = netTotal;
 	}
 
-	public Long getTaxRate() {
-		return this.taxRate;
-	}
-
-	public void setTaxRate(Long taxRate) {
-		this.taxRate = taxRate;
-	}
-
 	public String getCurrency() {
 		return this.currency;
 	}
@@ -98,12 +95,12 @@ public class Payment {
 		this.currency = currency;
 	}
 
-	public List<LineItem> getLineItems() {
-		return this.lineItems;
+	public List<Position> getPositions() {
+		return this.positions;
 	}
 
-	public void setLineItems(List<LineItem> lineItems) {
-		this.lineItems = lineItems;
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
 	}
 
 	@Override

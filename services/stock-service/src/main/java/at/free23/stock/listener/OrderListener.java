@@ -32,19 +32,21 @@ public class OrderListener {
 
 	@KafkaListener(topics = "order", containerFactory = "jsonKafkaListenerContainerFactory")
 	public void updateStock(OrderPayload payload) {
-		LOGGER.info("Recieved orderPayload!");
 		switch (OrderEvent.valueOf(payload.getEvent())) {
 		case ORDER_RCV:
+			LOGGER.info("New order recieved, preparing items for shipping");
 			payload.getLineItems().stream()
 			.forEach(i -> this.service.reserveItem(payload.getOrderRef(), i.getId(), i.getQuantity()));
 			break;
 		case PAYMENT_RCV:
+			LOGGER.info("Payment recieved, booking items for shipping");
 			this.service.bookShipping(payload.getOrderRef());
 			final OrderPayload shippingPayload = new OrderPayload(payload.getOrderRef(), OrderEvent.SHIPPING_BOOKED);
-			this.temlpate
-					.send(new GenericMessage<>(shippingPayload));
+			this.temlpate.send(new GenericMessage<>(shippingPayload));
 			break;
 		case PAYMENT_OVERDUE:
+			LOGGER.info("Cancelling reserved items due to payment overdue");
+			this.service.cancelReservedItems(payload.getOrderRef());
 			break;
 		}
 	}

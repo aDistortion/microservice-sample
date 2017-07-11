@@ -5,26 +5,31 @@ package at.free23.order.api;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
+import at.free23.order.model.OrderLineItem;
+
 /**
  * @author michael.vlasaty
  *
  */
-// @JsonTypeName(value="orderPayload")
 public class OrderPayload extends TransactionPayload {
 
-	private List<LineItem> lineItems;
+	private List<LineItemDto> lineItems;
 
-	public OrderPayload(String orderRef, OrderEvent event, List<LineItem> lineItems) {
+	public OrderPayload(String orderRef, OrderEvent event, List<OrderLineItem> items) {
 		this.orderRef = orderRef;
 		this.event = event.toString();
-		this.lineItems = lineItems;
+		this.lineItems = Lists.newArrayList();
+		items.stream().forEach(i -> this.lineItems
+				.add(new LineItemDto(i.getId().getLineItemId(), i.getQuantity(), i.getLineItem().getUuid())));
 	}
 
-	public List<LineItem> getLineItems() {
+	public List<LineItemDto> getLineItems() {
 		return this.lineItems;
 	}
 
-	public void setLineItems(List<LineItem> lineItems) {
+	public void setLineItems(List<LineItemDto> lineItems) {
 		this.lineItems = lineItems;
 	}
 }

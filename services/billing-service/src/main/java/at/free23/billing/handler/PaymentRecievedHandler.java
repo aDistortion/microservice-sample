@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 
 import at.free23.billing.api.OrderEvent;
 import at.free23.billing.api.OrderPayload;
-import at.free23.billing.api.Payment;
+import at.free23.billing.model.Invoice;
 
 /**
  * @author michael.vlasaty
  *
  */
 @Component
-@RepositoryEventHandler(Payment.class)
+@RepositoryEventHandler(Invoice.class)
 public class PaymentRecievedHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PaymentRecievedHandler.class);
@@ -30,10 +30,10 @@ public class PaymentRecievedHandler {
 	private KafkaTemplate<String, ?> template;
 
 	@HandleAfterSave
-	public void onSaved(Payment savedPayment) {
+	public void onSaved(Invoice savedPayment) {
 		if(savedPayment.getRecieved() != null){
 			LOGGER.info("Payment recieved finishing billing for " + savedPayment.getId());
-			final OrderPayload payload = new OrderPayload(savedPayment.getOrderId(), OrderEvent.PAYMENT_RCV);
+			final OrderPayload payload = new OrderPayload(savedPayment.getOrderRef(), OrderEvent.PAYMENT_RCV);
 			this.template.send(new GenericMessage<>(payload));
 		}
 	}

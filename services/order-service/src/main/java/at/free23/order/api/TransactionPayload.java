@@ -7,14 +7,6 @@ package at.free23.order.api;
  * @author michael.vlasaty
  *
  */
-// @JsonTypeInfo(
-// use = JsonTypeInfo.Id.NAME,
-// include = As.PROPERTY,
-// property = "type")
-// @JsonSubTypes({
-// @JsonSubTypes.Type(value = OrderPayload.class, name = "orderPayload"),
-// @JsonSubTypes.Type(value = LineItemPayload.class, name = "lineItemPayload")
-// })
 public class TransactionPayload {
 
 	protected String orderRef;

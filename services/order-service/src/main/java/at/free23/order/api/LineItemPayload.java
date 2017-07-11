@@ -3,11 +3,12 @@
  */
 package at.free23.order.api;
 
+import at.free23.order.model.LineItem;
+
 /**
  * @author michael.vlasaty
  *
  */
-// @JsonTypeName(value="lineItemPayload")
 public class LineItemPayload extends TransactionPayload {
 
 	private LineItem item;

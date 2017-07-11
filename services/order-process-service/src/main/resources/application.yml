@@ -40,6 +40,13 @@ spring:
     consumer:
       group-id: order-process
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        health-check-path: /order-process/health
+        fail-fast: false
 camunda:
   bpm:
     filter:

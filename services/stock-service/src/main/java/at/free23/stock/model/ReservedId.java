@@ -1,7 +1,7 @@
 /**
  *
  */
-package at.free23.stock.api;
+package at.free23.stock.model;
 
 import java.io.Serializable;
 

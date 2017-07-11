@@ -38,7 +38,15 @@ spring:
     producer:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 3
     consumer:
       group-id: order
       #value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       #enable-auto-commit: false
+  cloud:
+    consul:
+      enabled: false
+      host: consul
+      port: 8500
+      discovery:
+        fail-fast: false

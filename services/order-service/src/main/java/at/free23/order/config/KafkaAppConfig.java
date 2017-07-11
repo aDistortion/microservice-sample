@@ -32,10 +32,10 @@ public class KafkaAppConfig {
 	
 	@Bean
 	public ConcurrentKafkaListenerContainerFactory<String, TransactionPayload> jsonKafkaListenerContainerFactory(TransactionPayloadDeserializer deserializer) {
-		ConcurrentKafkaListenerContainerFactory<String, TransactionPayload> factory =
+		final ConcurrentKafkaListenerContainerFactory<String, TransactionPayload> factory =
 				new ConcurrentKafkaListenerContainerFactory<>();
 		
-		DefaultKafkaConsumerFactory<String, TransactionPayload> cFactory = new DefaultKafkaConsumerFactory<>(kafkaProps.buildConsumerProperties());
+		final DefaultKafkaConsumerFactory<String, TransactionPayload> cFactory = new DefaultKafkaConsumerFactory<>(this.kafkaProps.buildConsumerProperties());
 		cFactory.setKeyDeserializer(new StringDeserializer());
 		cFactory.setValueDeserializer(deserializer);
 		factory.setConsumerFactory(cFactory);
@@ -44,11 +44,11 @@ public class KafkaAppConfig {
 	
 	@Bean
 	public KafkaTemplate<String, TransactionPayload> kafkaTemplate(ObjectMapper mapper) {
-		DefaultKafkaProducerFactory<String, TransactionPayload> pFactory = new DefaultKafkaProducerFactory<>(this.kafkaProps.buildProducerProperties());
+		final DefaultKafkaProducerFactory<String, TransactionPayload> pFactory = new DefaultKafkaProducerFactory<>(this.kafkaProps.buildProducerProperties());
 		pFactory.setKeySerializer(new StringSerializer());
 		pFactory.setValueSerializer(new JsonSerializer<TransactionPayload>(mapper));
 		
-		KafkaTemplate<String, TransactionPayload> kafkaTemplate = new KafkaTemplate<>(pFactory);
+		final KafkaTemplate<String, TransactionPayload> kafkaTemplate = new KafkaTemplate<>(pFactory);
 		kafkaTemplate.setDefaultTopic(this.kafkaProps.getTemplate().getDefaultTopic());
 		return kafkaTemplate;
 	}

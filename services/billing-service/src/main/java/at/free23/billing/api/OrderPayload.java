@@ -9,10 +9,9 @@ import java.util.List;
  * @author michael.vlasaty
  *
  */
-// @JsonTypeName(value="orderPayload")
 public class OrderPayload extends TransactionPayload {
 
-	private List<LineItem> lineItems;
+	private List<LineItemDto> lineItems;
 
 	public OrderPayload(){ }
 
@@ -21,11 +20,11 @@ public class OrderPayload extends TransactionPayload {
 		this.event = event.toString();
 	}
 
-	public List<LineItem> getLineItems() {
+	public List<LineItemDto> getLineItems() {
 		return this.lineItems;
 	}
 
-	public void setLineItems(List<LineItem> lineItems) {
+	public void setLineItems(List<LineItemDto> lineItems) {
 		this.lineItems = lineItems;
 	}
 }
