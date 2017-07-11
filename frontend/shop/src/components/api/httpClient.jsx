@@ -1,39 +1,32 @@
-
-const headers = {
+// @flow
+const headers: Object = {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
 }
 
-const baseUrl = "http://shop.sample.com";
+const baseUrl: string = "http://shop.sample.com";
 
 export class HttpClient{
-  get(url, cb){
+  get(url: string, cb: (res: Object) => mixed): void{
     fetch(baseUrl + url, {method: 'GET'})
     .then(response => response.json())
-    .then(res => cb(res))
-    .catch(err => console.log('Error reading response '+err));
+    .then((res: Object) => cb(res))
+    .catch((err: string) => console.log('Error reading response '+err));
   }
-  getWithResponse(url){
+
+  getWithResponse(url: string): Promise<Object>{
     return (fetch(baseUrl + url, {method: 'GET'})
     .then(response => response.json()));
   }
 
-  post(url, payload, cb){
+  post(url: string, payload: Object, cb: (res: Object) => mixed): void{
     fetch(baseUrl + url,{
           headers: headers,
           method: "POST",
           body: JSON.stringify(payload)})
     .then(response => response.json())
-    .then(res => cb(res))
-    .catch(err => console.log('Error posting request '+err));
+    .then((res: Object) => cb(res))
+    .catch((err: string) => console.log('Error posting request '+err));
   }
 
-  postEmpty(url, cb){
-    fetch(baseUrl + url,{
-          headers: headers,
-          method: "POST"})
-    .then(response => response.json())
-    .then(res => cb(res))
-    .catch(err => console.log('Error posting request '+err));
-  }
 }

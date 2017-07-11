@@ -1,0 +1,26 @@
+<div class="container" >
+  <div class="row" >
+    <h1 class="text-center">
+      Stock Items
+    </h1>
+  </div>
+  <div class="row">
+    <h2>Overview</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">On stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <th class="text-center" scope="row">{{item.id}}</th>
+          <td class="text-center">{{item.name}}</td>
+          <td class="text-center">{{item.onStock}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

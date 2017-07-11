@@ -1,0 +1,12 @@
+[ignore]
+./dist/.*
+./node_modules/.*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper.extension='css' -> './flow/CSSModule.js.flow'
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
