@@ -5,7 +5,7 @@ package at.free23.shipping.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import at.free23.shipping.api.ShippingNote;
+import at.free23.shipping.model.ShippingNote;
 
 /**
  * @author michael.vlasaty

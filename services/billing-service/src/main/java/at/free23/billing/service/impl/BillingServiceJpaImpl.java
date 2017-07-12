@@ -44,22 +44,18 @@ public class BillingServiceJpaImpl implements IBillingService {
 	@Override
 	public Invoice createInvoice(String orderRef, List<LineItemDto> lineItems) {
 		Invoice invoice = this.invoiceRepo.save(new Invoice(orderRef));
-		invoice.setGrossTotal(0D);
-
 		final List<Position> positions = lineItems.stream().map(this::readDto).collect(Collectors.toList());
 
 		final List<Position> savedPos = Lists.newArrayList();
 		final Iterator<Position> it = positions.iterator();
 		while (it.hasNext()) {
 			final Position position = it.next();
-			final LineItem item = this.lineItemRepo.findByUuid(position.getLineItem().getUuid());
+			this.fetchLineItem(position);
 
-			position.setTotal(item.getPrice() * position.getQuantity());
-			position.setLineItem(item);
 			position.setInvoice(invoice);
-			position.setId(new PositionId(invoice.getId(), item.getId()));
-
+			position.setId(new PositionId(invoice.getId(), position.getLineItem().getId()));
 			savedPos.add(this.positionRepo.save(position));
+
 			invoice.setGrossTotal(invoice.getGrossTotal() + position.getTotal());
 		}
 		invoice.setCurrency("EUR");
@@ -70,6 +66,12 @@ public class BillingServiceJpaImpl implements IBillingService {
 
 	private Position readDto(LineItemDto itemDto) {
 		return new Position(new LineItem(itemDto.getUuid()), itemDto.getQuantity());
+	}
+
+	private void fetchLineItem(Position position) {
+		final LineItem item = this.lineItemRepo.findByUuid(position.getLineItem().getUuid());
+		position.setTotal(item.getPrice() * position.getQuantity());
+		position.setLineItem(item);
 	}
 
 	/* (non-Javadoc)

@@ -8,7 +8,14 @@ package at.free23.stock.service;
  *
  */
 public interface IStockService {
-	public void reserveItem(String orderRef, Long itemId, Long quantity);
+	/**
+	 *
+	 * @param orderRef
+	 * @param itemId
+	 * @param quantity
+	 * @return preparationTime
+	 */
+	public Double reserveItem(String orderRef, String uuid, Long quantity);
 
 	public void bookShipping(String orderRef);
 

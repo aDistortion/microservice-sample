@@ -21,6 +21,11 @@ public class OrderPayload extends TransactionPayload {
 		this.event = event.toString();
 	}
 
+	public OrderPayload(String orderRef, ShippingEvent event) {
+		this.orderRef = orderRef;
+		this.event = event.toString();
+	}
+
 	public List<LineItemDto> getLineItems() {
 		return this.lineItems;
 	}

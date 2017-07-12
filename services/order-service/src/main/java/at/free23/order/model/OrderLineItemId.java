@@ -62,4 +62,8 @@ public class OrderLineItemId implements Serializable {
 		return Objects.hash(this.getOrderId(), this.getLineItemId());
 	}
 
+	@Override
+	public String toString() {
+		return this.getOrderId() + "-" + this.getLineItemId();
+	}
 }

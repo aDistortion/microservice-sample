@@ -44,6 +44,7 @@ spring:
       #enable-auto-commit: false
   cloud:
     consul:
+      enabled: false
       host: consul
       port: 8500
       discovery:

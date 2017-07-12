@@ -33,8 +33,8 @@ public class Invoice {
 	private LocalDateTime recieved;
 
 	private String currency;
-	private Double grossTotal;
-	private Double netTotal;
+	private Double grossTotal = 0D;
+	private Double netTotal = 0D;
 
 	@OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private List<Position> positions;

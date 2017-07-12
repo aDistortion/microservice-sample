@@ -11,35 +11,36 @@ import org.springframework.stereotype.Component;
 
 import at.free23.shipping.api.OrderEvent;
 import at.free23.shipping.api.OrderPayload;
-import at.free23.shipping.api.ShippingNote;
-import at.free23.shipping.repository.ShippingNoteRepository;
+import at.free23.shipping.model.ShippingNote;
+import at.free23.shipping.service.IShippingService;
 
 /**
  * @author michael.vlasaty
  *
  */
 @Component
-public class PaymentListener {
+public class OrderListener {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PaymentListener.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderListener.class);
 
 	@Autowired
-	private ShippingNoteRepository repo;
+	private IShippingService service;
 
 	@KafkaListener(topics = "order", containerFactory = "jsonKafkaListenerContainerFactory")
 	public void payment(OrderPayload payload) {
 		switch (OrderEvent.valueOf(payload.getEvent())) {
-		case ITEM_WONT_SHIP:
-			break;
-		case PAYMENT_RCV:
+		case ORDER_RCV:
 			LOGGER.info("Preparing shipping note...");
-			this.repo.save(new ShippingNote(payload.getOrderRef()));
+			final ShippingNote note = this.service.createShippingNote(payload.getOrderRef(), payload.getLineItems());
+			break;
 		case SHIPPING_BOOKED:
 			LOGGER.info("Sending shipping note...");
-			final ShippingNote ready = this.repo.findByOrderRef(payload.getOrderRef());
-			ready.setShipped(true);
-			this.repo.save(ready);
+			// final ShippingNote ready =
+			// this.repo.findByOrderRef(payload.getOrderRef());
+			// ready.setShipped(true);
+			// this.repo.save(ready);
 			break;
 		}
 	}
+
 }
