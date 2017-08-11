@@ -30,6 +30,7 @@
 		<module>shipping-service</module>
 		<module>stock-service</module>
 		<module>order-process-service</module>
+		<module>shop-service</module>
 	</modules>
 	
 	<dependencyManagement>
