@@ -48,29 +48,34 @@ services:
     build: ./services/order-service
     environment:
       SPRING_APPLICATION_JSON: '{"spring.kafka.bootstrap-servers": ["kafka:9092"]}'
+      SPRING_CLOUD_CONSUL_ENABLED: "true"
     depends_on:
       - kafka
   order-process:
     build: ./services/order-process-service
     environment:
       SPRING_APPLICATION_JSON: '{"spring.kafka.bootstrap-servers": ["kafka:9092"]}'
+      SPRING_CLOUD_CONSUL_ENABLED: "true"
     depends_on:
       - kafka
   billing:
     build: ./services/billing-service
     environment:
       SPRING_APPLICATION_JSON: '{"spring.kafka.bootstrap-servers": ["kafka:9092"]}'
+      SPRING_CLOUD_CONSUL_ENABLED: "true"
     depends_on:
       - kafka
   shipping:
     build: ./services/shipping-service
     environment:
       SPRING_APPLICATION_JSON: '{"spring.kafka.bootstrap-servers": ["kafka:9092"]}'
+      SPRING_CLOUD_CONSUL_ENABLED: "true"
     depends_on:
       - kafka
   stock:
     build: ./services/stock-service
     environment:
       SPRING_APPLICATION_JSON: '{"spring.kafka.bootstrap-servers": ["kafka:9092"]}'
+      SPRING_CLOUD_CONSUL_ENABLED: "true"
     depends_on:
       - kafka
