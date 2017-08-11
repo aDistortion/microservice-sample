@@ -1,0 +1,162 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Shop Service",
+		"_postman_id": "cc279fe5-d91e-50a3-979d-cbc88ec25d31",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							"if(contentTypeHeaderExists){",
+							"    tests[\"Content-Type is application/json\"] = responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}",
+							"tests[\"Has Authorization header\"] = responseHeaders.hasOwnProperty(\"authorization\");",
+							"",
+							"//var jsonData = JSON.parse(responseBody);",
+							"//tests[\"Has empty item list\"] = jsonData.items === [];",
+							"",
+							"",
+							"tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8085/cart/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "anonymous44553907",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							"if(contentTypeHeaderExists){",
+							"    tests[\"Content-Type is application/json\"] = responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}",
+							"tests[\"Has Authorization header\"] = responseHeaders.hasOwnProperty(\"authorization\");",
+							"",
+							"//TODO: check if the sent item is present",
+							"//var jsonData = JSON.parse(responseBody);",
+							"//tests[\"Has empty item list\"] = jsonData.items === [];",
+							"",
+							"",
+							"tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8085/cart/",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "anonymous44553907",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"uuid\": \"indian-pale-ale\",\n\t\"amount\": 3\n}"
+				},
+				"description": "Adds an item with the requested amount to the cart."
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							"if(contentTypeHeaderExists){",
+							"    tests[\"Content-Type is application/json\"] = responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}",
+							"tests[\"Has Authorization header\"] = responseHeaders.hasOwnProperty(\"authorization\");",
+							"",
+							"//TODO: check if amount is decremented and gone if < 0",
+							"//var jsonData = JSON.parse(responseBody);",
+							"//tests[\"Has empty item list\"] = jsonData.items === [];",
+							"",
+							"",
+							"tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8085/cart/",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "anonymous44553907",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"uuid\": \"indian-pale-ale\",\n\t\"amount\": 3\n}"
+				},
+				"description": "Removes a requested item from the cart."
+			},
+			"response": []
+		}
+	]
+}
