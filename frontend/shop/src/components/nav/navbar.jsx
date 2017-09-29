@@ -89,7 +89,7 @@ class NavContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  itemCount: state.cart.items.reduce((sum, item) => sum+item.amount, 0),
+  itemCount: state.cart.items.reduce((sum, item) => sum+item.quantity, 0),
   fetchingCart: state.app.fetchCart,
   cartSynced: state.app.cartSynced
 });

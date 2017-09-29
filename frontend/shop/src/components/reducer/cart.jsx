@@ -24,10 +24,10 @@ export function cartApp(state: Object = initialState, action: Object): Object {
     case ADD_ITEM:
       let items = newState.cart.items.filter(item => (item.uuid == action.item.uuid));
       if(items[0] != null){
-        items[0].amount += action.quantity;
+        items[0].quantity += action.quantity;
       }else{
         let item = action.item;
-        item.amount = action.quantity;
+        item.quantity = action.quantity;
         newState.cart.items.push(item);
       }
       break;

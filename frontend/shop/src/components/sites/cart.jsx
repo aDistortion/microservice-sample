@@ -31,13 +31,13 @@ class ItemTableContainer extends React.Component {
         </thead>
         <tbody>
           {
-            this.props.items.map(item => <ItemRow key={item.uuid} name={item.name} quantity={item.amount} price={item.price}/>)
+            this.props.items.map(item => <ItemRow key={item.uuid} name={item.name} quantity={item.quantity} price={item.price}/>)
           }
           <tr>
             <td>Total</td>
-            <td>{this.props.items.reduce((sum, item) => sum+item.amount, 0)}</td>
+            <td>{this.props.items.reduce((sum, item) => sum+item.quantity, 0)}</td>
             <td>-</td>
-            <td>{this.props.items.reduce((sum, item) => sum+item.price*item.amount, 0)}</td>
+            <td>{this.props.items.reduce((sum, item) => sum+item.price*item.quantity, 0)}</td>
           </tr>
         </tbody>
       </table>

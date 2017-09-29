@@ -75,7 +75,7 @@ export function addItem(item: Object, quantity: number): Object{
   return ((dispatch) => {
     let headers = getHeaders();
     let itemDto = item;
-    itemDto.amount = quantity;
+    itemDto.quantity = quantity;
     return fetch('/cart/', {
       method: 'PUT',
       headers: headers,
