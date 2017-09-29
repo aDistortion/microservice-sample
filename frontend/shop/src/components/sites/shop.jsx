@@ -12,7 +12,7 @@ export default class Shop extends React.Component{
         country: "Austria",
         price: "4.99",
         stock: 12,
-        uuid: "123"
+        uuid: "green-goose"
       },
       {
         vendor: "De Brabandere",
@@ -21,7 +21,7 @@ export default class Shop extends React.Component{
         country: "Belgium",
         price: "7.99",
         stock: 3,
-        uuid: "456"
+        uuid: "petrus"
       },
       {
         vendor: "Hacker-Pschorr",
@@ -30,7 +30,7 @@ export default class Shop extends React.Component{
         country: "Germany",
         price: "2.99",
         stock: 0,
-        uuid: "789"
+        uuid: "muenchner-hell"
       },
     ];
     return(

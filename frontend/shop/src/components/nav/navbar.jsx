@@ -62,9 +62,13 @@ class NavContainer extends React.Component {
   }
 
   render(){
+    let badgeColor = '#3a87ad';
+    if(this.props.cartSynced == false || this.props.fetchingCart == true){
+      badgeColor = '#999999';
+    }
     return(
       <ul className="nav navbar-nav navbar-right">
-        <li><Link to="/cart">Cart <span className="badge">{this.props.itemCount}</span></Link></li>
+        <li><Link to="/cart">Cart <span className="badge" style={{backgroundColor: badgeColor}}>{this.props.itemCount}</span></Link></li>
         { this.state.isAuthenticated ? 
           <li className="dropdown">
             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span className="caret"></span></a>
@@ -85,6 +89,8 @@ class NavContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  itemCount: state.cart.items.reduce((sum, item) => sum+item.quantity, 0)
+  itemCount: state.cart.items.reduce((sum, item) => sum+item.amount, 0),
+  fetchingCart: state.app.fetchCart,
+  cartSynced: state.app.cartSynced
 });
 const ConnectedNavContainer = connect(mapStateToProps)(NavContainer);

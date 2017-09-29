@@ -17,7 +17,6 @@ export class ItemCard extends React.Component{
 
   addToCart(event){
     event.preventDefault();
-    console.log("Adding "+this.props.item.name+" to cart, "+this.state.quantity);
     this.props.onAddToCart(this.props.item, this.state.quantity);
     this.setState({quantity: 1});
   }

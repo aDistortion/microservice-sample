@@ -46,6 +46,10 @@ module.exports = {
       '/order-process': {
         target: 'http://localhost:8084',
         secure: false
+      },
+      '/cart': {
+        target: 'http://localhost:8085',
+        secure: false
       }
     }
   }

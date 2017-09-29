@@ -10,38 +10,6 @@ import History from './sites/history.jsx';
 import Cart from './sites/cart.jsx';
 import Settings from './sites/settings.jsx';
 
-const routes = [
-  { path: '/',
-    label: 'Shop',
-    exact: true,
-    main: () => <Shop/>,
-    authRequired: false,
-    visible: true
-  },
-  {
-    path: '/settings',
-    label: 'Settings',
-    exact: true,
-    main: () => <Settings/>,
-    authRequired: true,
-    visible: false
-  },
-  { path: '/cart',
-    label: 'Cart',
-    exact: true,
-    main: () => <Cart/>,
-    authRequired: false,
-    visible: false
-  },
-  { path: '/history',
-    label: 'History',
-    exact: true,
-    main: () => <h2>Bubblegum</h2>,
-    authRequired: true,
-    visible: true
-  }
-];
-
 export default class App extends React.Component {
   constructor(props){
     super(props);

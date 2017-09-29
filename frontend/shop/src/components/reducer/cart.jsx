@@ -1,37 +1,55 @@
 // @flow
-import {Action, ADD_ITEM, SUB_ITEM} from '../action/cartAction.jsx';
+import {Action, ADD_ITEM, SUB_ITEM, RECV_CART, GET_CART, ERR_RECV_CART} from '../action/cartAction.jsx';
 
 const initialState: Object = {
   cart: {
-    cartId: '',
+    //cartId: '',//not used as we identify a cart owner by the sent authorization header transparently
     items: []
   },
   user: {
     displayName: 'Anonymous',
     id: '',
     isAuthenticated: false
+  },
+  app: {
+    fetchCart: false,
+    cartSynced: false,
+    postItem: false
   }
 }
 
 export function cartApp(state: Object = initialState, action: Object): Object {
-  console.log("Action: "+action.type+", "+action.quantity);
   let newState = Object.assign({}, state);
   switch(action.type){
     case ADD_ITEM:
       let items = newState.cart.items.filter(item => (item.uuid == action.item.uuid));
       if(items[0] != null){
-        console.log('Updating item...')
-        items[0].quantity += action.quantity;
+        items[0].amount += action.quantity;
       }else{
-        console.log('Adding new item...');
         let item = action.item;
-        item.quantity = action.quantity;
+        item.amount = action.quantity;
         newState.cart.items.push(item);
       }
       break;
     case SUB_ITEM:
       break;
+    case RECV_CART:
+      newState = Object.assign({}, state, {
+        cart: action.cart,
+        app: {fetchCart: false, getItem: false, cartSynced: true}
+      });
+      break;
+    case GET_CART:
+      newState = Object.assign({}, state, {
+        app: {fetchCart: true, getItem: false, cartSynced: false}
+      });
+      break;
+    case ERR_RECV_CART:
+      newState = Object.assign({}, state, {
+        app: {fetchCart: false, getItem: false, cartSynced: false}
+      });
+      break;
     }
-    console.log(newState);
     return newState;
 }
+
