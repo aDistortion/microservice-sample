@@ -1,17 +1,26 @@
 // @flow
 import { HttpClient } from "./httpClient.jsx";
 
-const httpClient = new HttpClient;
-
 export class OrderProcessService {
+  
+  httpClient: HttpClient;
+
+  constructor(){
+    let host = "http://shop.sample.com/api";
+    if(process.env.NODE_ENV !== "production"){
+      host = "http://localhost:8084";
+    }
+    this.httpClient = new HttpClient(host+"/order-process/rest/engine/default");
+  }
+
   checkIn(order: Object, cb: (res: Object) => mixed){
     let orderVal = new ObjectValue(order, "at.free23.order.process.api.Order");
     let request = new SubmitFormRequest({order: orderVal});
-    httpClient.post("/order-process/rest/engine/default/process-definition/key/orderProcess/submit-form", request, cb);
+    this.httpClient.post("/process-definition/key/orderProcess/submit-form", request, cb);
   }
   fetchInstanceVariables(instanceId: number, cb: (res: Object) => mixed){
-    httpClient
-      .getWithResponse('/order-process/rest/engine/default/process-instance/'+instanceId+'/variables')
+    this.httpClient
+      .getWithResponse('/process-instance/'+instanceId+'/variables')
       .then(variables => {
         let cleanedVars = {};
         Object.keys(variables).forEach(key => cleanedVars[key] = variables[key].value);
@@ -21,13 +30,13 @@ export class OrderProcessService {
       .catch((err: string) => console.log('Error reading instance variables '+err));
   }
   fetchInstance(instanceId: number, cb: (res: Object) => mixed){
-    httpClient.get('/order-process/rest/engine/default/process-instance/'+instanceId, cb);
+    this.httpClient.get('/process-instance/'+instanceId, cb);
   }
   fetchTask(instanceId: number, cb: (res: Object) => mixed){
-    httpClient.get('/order-process/rest/engine/default/task?processInstanceId='+instanceId, cb);
+    this.httpClient.get('/task?processInstanceId='+instanceId, cb);
   }
   completeTask(taskId: number, cb: (res: Object) => mixed){
-    httpClient.post('/order-process/rest/engine/default/task/'+taskId+'/complete', {variables: {} }, cb);
+    this.httpClient.post('/task/'+taskId+'/complete', {variables: {} }, cb);
   }
 }
 

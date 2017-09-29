@@ -1,14 +1,14 @@
 import React from 'react';
 import 'jquery';
 import 'bootstrap/dist/js/bootstrap';
-import AppRouter from './nav/navbar.jsx';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch, Link, Route, browserHistory } from 'react-router-dom';
+import { AppSwitch } from './nav/routes.jsx';
+import ShopNavbar from './nav/navbar.jsx';
 import Shop from './sites/shop.jsx';
-import Dashboard from './sites/dashboard.jsx';
-import Billing from './sites/billing.jsx';
-import Shipping from './sites/shipping.jsx';
 import History from './sites/history.jsx';
-import CheckIn from './sites/checkIn.jsx';
-import ConfirmOrder from './sites/confirmOrder.jsx';
+import Cart from './sites/cart.jsx';
+import Settings from './sites/settings.jsx';
 
 const routes = [
   { path: '/',
@@ -18,40 +18,20 @@ const routes = [
     authRequired: false,
     visible: true
   },
-  { path: '/dashboard',
-    label: 'Dashboard',
+  {
+    path: '/settings',
+    label: 'Settings',
     exact: true,
-    main: () => <Dashboard/>,
+    main: () => <Settings/>,
     authRequired: true,
-    visible: true
+    visible: false
   },
   { path: '/cart',
     label: 'Cart',
     exact: true,
-    main: () => <CheckIn/>,
-    authRequired: true,
-    visible: false
-  },
-  { path: '/confirmOrder/:instanceId',
-    label: 'Confirm Order',
-    exact: false,
-    main: () => <ConfirmOrder />,
+    main: () => <Cart/>,
     authRequired: false,
     visible: false
-  },
-  { path: '/shipping',
-    label: 'Shipping',
-    exact: true,
-    main: () => <h2>Bubblegum</h2>,
-    authRequired: true,
-    visible: true
-  },
-  { path: '/billing',
-    label: 'Billing',
-    exact: true,
-    main: () => <h2>Shoelaces</h2>,
-    authRequired: true,
-    visible: true
   },
   { path: '/history',
     label: 'History',
@@ -70,6 +50,46 @@ export default class App extends React.Component {
 
   render() {
     return(
-      <AppRouter routes={routes} isAuthenticated={this.state.isAuthenticated}/>
+      <Provider store={this.props.store}>
+        <Main/>
+      </Provider>
     )}
 }
+
+class Main extends React.Component {
+  render(){
+    return(
+      <main>
+        <Router history={browserHistory}>
+          <div>
+            <ShopNavbar/>
+            <Switch>
+              <Route
+                key={1}
+                path="/"
+                exact={true}
+                component={Shop} />
+                <Route
+                  key={2}
+                  path="/cart"
+                  exact={true}
+                  component={Cart} />
+            </Switch>
+          </div>
+        </Router>
+      </main>
+    );
+  }
+}
+/*
+                <Route
+                  key={3}
+                  path="/history"
+                  exact={true}
+                  component={History} />
+                <Route
+                  key={4}
+                  path="/settings"
+                  exact={true}
+                  component={Settings} />
+*/

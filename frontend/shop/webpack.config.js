@@ -24,6 +24,7 @@ module.exports = {
       { test: /\.sass$/, loaders: ['raw', 'sass'] },
       { test: /\.(woff2?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: "file?name=fonts/[name].[ext]" },
       { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' }
+      //TODO: add fontawesome icons
     ],
   },
   plugins: [
@@ -32,6 +33,20 @@ module.exports = {
           jQuery: 'jquery',
           $: 'jquery',
           jquery: 'jquery'
+      }),
+      new webpack.EnvironmentPlugin({
+          NODE_ENV: 'development'
       })
-    ]
+  ],
+  devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    compress: true,
+    port: 8080,
+    proxy: {
+      '/order-process': {
+        target: 'http://localhost:8084',
+        secure: false
+      }
+    }
+  }
 }

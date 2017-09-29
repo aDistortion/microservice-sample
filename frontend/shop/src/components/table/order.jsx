@@ -9,11 +9,11 @@ export class CartTable extends React.Component{
       <table className="table table-hover">
         <thead>
           <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
             <th>Amount</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -27,12 +27,12 @@ export class CartTable extends React.Component{
 export class ProductRow extends React.Component{
   render(){
     return(
-      <tr key={this.props.product.id}>
-        <td className="text-left">{this.props.product.id}</td>
+      <tr key={this.props.product.uuid}>
         <td className="text-left">{this.props.product.name}</td>
         <td className="text-left">{this.props.product.description}</td>
         <td className="text-right">{this.props.product.price} <span className="glyphicon glyphicon-yen" aria-hidden="true"></span></td>
         <td className="text-left">{this.props.product.quantity}</td>
+        <td className="text-left">{this.props.product.total}</td>
       </tr>
     );
   }
