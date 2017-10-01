@@ -6,6 +6,7 @@ package at.free23.shop.api;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
 
 import at.free23.shop.model.Cart;
@@ -14,6 +15,8 @@ import at.free23.shop.model.Cart;
  * @author michael.vlasaty
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+// @JsonInclude(Include.NON_NULL)
 public class CartDto {
 
 	private List<ItemDto> items;

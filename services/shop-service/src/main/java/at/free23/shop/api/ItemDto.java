@@ -3,15 +3,24 @@
  */
 package at.free23.shop.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import at.free23.shop.model.Item;
 
 /**
  * @author michael.vlasaty
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(Include.NON_NULL)
 public class ItemDto {
 
 	private String uuid;
+
+	@JsonProperty("quantity")
 	private Integer amount;
 
 	public ItemDto() {
@@ -38,4 +47,5 @@ public class ItemDto {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+
 }

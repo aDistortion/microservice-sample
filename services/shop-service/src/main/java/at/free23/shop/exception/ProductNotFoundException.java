@@ -26,6 +26,14 @@ public class ProductNotFoundException extends RuntimeException {
 
 	public ProductNotFoundException(String uuid) {
 		super();
+		this.setUuid(uuid);
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 }

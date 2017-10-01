@@ -3,20 +3,32 @@
  */
 package at.free23.shop.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import at.free23.shop.model.Product;
 
 /**
  * @author michael.vlasaty
  *
  */
+// FIXME: this one is not used...
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(Include.NON_NULL)
 public class ProductDto {
 
 	private String uuid;
 	private String name;
 	private String description;
+	private String type;
 	private String imgUrl;
 
-	private Double grossAmount;
+	private String vendor;
+	private String country;
+
+	@JsonProperty("price")
 	private Double netAmount;
 
 	private Long taxRate;
@@ -26,7 +38,15 @@ public class ProductDto {
 	}
 
 	public ProductDto(Product product) {
-
+		this.uuid = product.getUuid();
+		this.name = product.getName();
+		this.description = product.getDescription();
+		this.type = product.getType();
+		this.imgUrl = product.getImgUrl();
+		this.netAmount = product.getNetAmount();
+		this.taxRate = product.getTaxRate();
+		this.vendor = product.getVendor().getName();
+		this.country = product.getVendor().getCountry();
 	}
 
 	public String getUuid() {
@@ -61,14 +81,6 @@ public class ProductDto {
 		this.imgUrl = imgUrl;
 	}
 
-	public Double getGrossAmount() {
-		return this.grossAmount;
-	}
-
-	public void setGrossAmount(Double grossAmount) {
-		this.grossAmount = grossAmount;
-	}
-
 	public Double getNetAmount() {
 		return this.netAmount;
 	}
@@ -83,5 +95,50 @@ public class ProductDto {
 
 	public void setTaxRate(Long taxRate) {
 		this.taxRate = taxRate;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return this.type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the vendor
+	 */
+	public String getVendor() {
+		return this.vendor;
+	}
+
+	/**
+	 * @param vendor
+	 *            the vendor to set
+	 */
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return this.country;
+	}
+
+	/**
+	 * @param country
+	 *            the country to set
+	 */
+	public void setCountry(String country) {
+		this.country = country;
 	}
 }

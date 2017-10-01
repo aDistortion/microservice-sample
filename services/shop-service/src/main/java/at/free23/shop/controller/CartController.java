@@ -73,4 +73,7 @@ public class CartController {
 		final Cart cart = this.cartService.removeItem(tenantId, item);
 		return new CartDto(cart);
 	}
+
+	// @RequestMapping(path = "/checkOut", method = RequestMethod.GET)
+	// public ResponseEntity
 }
