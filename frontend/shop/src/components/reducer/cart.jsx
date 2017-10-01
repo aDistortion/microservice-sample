@@ -1,55 +1,40 @@
 // @flow
-import {Action, ADD_ITEM, SUB_ITEM, RECV_CART, GET_CART, ERR_RECV_CART} from '../action/cartAction.jsx';
 
-const initialState: Object = {
-  cart: {
-    //cartId: '',//not used as we identify a cart owner by the sent authorization header transparently
-    items: []
-  },
-  user: {
-    displayName: 'Anonymous',
-    id: '',
-    isAuthenticated: false
-  },
-  app: {
-    fetchCart: false,
-    cartSynced: false,
-    postItem: false
-  }
+import {RECV_CART, GET_CART, ERR_RECV_CART} from '../action/cartAction.jsx';
+import { combineReducers } from 'redux';
+import cartItems from './cartItems.jsx';
+
+const initCart = {
+  isFetching: false,
+  isInSync: false,
+  postingItem: false
 }
 
-export function cartApp(state: Object = initialState, action: Object): Object {
+const cartReducer = (state: Object = initCart, action: Object) => {
   let newState = Object.assign({}, state);
   switch(action.type){
-    case ADD_ITEM:
-      let items = newState.cart.items.filter(item => (item.uuid == action.item.uuid));
-      if(items[0] != null){
-        items[0].quantity += action.quantity;
-      }else{
-        let item = action.item;
-        item.quantity = action.quantity;
-        newState.cart.items.push(item);
-      }
-      break;
-    case SUB_ITEM:
+    case GET_CART:
+      newState.isFetching = true;
+      newState.getItem = false;
+      newState.isInSync = false;
       break;
     case RECV_CART:
-      newState = Object.assign({}, state, {
-        cart: action.cart,
-        app: {fetchCart: false, getItem: false, cartSynced: true}
-      });
-      break;
-    case GET_CART:
-      newState = Object.assign({}, state, {
-        app: {fetchCart: true, getItem: false, cartSynced: false}
-      });
+      newState.isFetching = false;
+      newState.getItem = false;
+      newState.isInSync = true;
       break;
     case ERR_RECV_CART:
-      newState = Object.assign({}, state, {
-        app: {fetchCart: false, getItem: false, cartSynced: false}
-      });
+      newState.isFetching = false;
+      newState.getItem = false;
+      newState.isInSync = false;
       break;
-    }
-    return newState;
+  }
+  return newState;
 }
 
+const cart = combineReducers({
+    app: cartReducer,
+    items: cartItems
+});
+
+export default cart;

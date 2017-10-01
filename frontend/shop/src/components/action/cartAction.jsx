@@ -1,4 +1,5 @@
 // @flow
+import {RECV_ITEMS} from './items.jsx';
 
 export const INIT_CART: string = 'INIT_CART';
 export const GET_CART: string = 'GET_CART';
@@ -29,6 +30,7 @@ function getHeaders(): Object{
   if(authHeader !== 'null'){
     headers.authorization = authHeader;
   }
+  console.log(headers);
   return headers;
 }
 
@@ -51,7 +53,11 @@ export function initCart(){
         }
         return response.json();
       })
-    .then(json => dispatch(receiveCart(json)))
+    //add dispatch here for fetched card items
+    .then(json => {
+      dispatch(receivedCart(json));
+      dispatch(receivedItems(json));
+    })
     .catch((error) => {
       console.log('Could not initialize cart.', error);
       dispatch(errorReceiveCart());
@@ -63,42 +69,14 @@ function getCart(){
   return {type: GET_CART};
 }
 
-function receiveCart(cart){
+function receivedCart(cart){
   return {type: RECV_CART, cart: cart};
+}
+
+function receivedItems(cart){
+  return {type: RECV_ITEMS, items: cart.items};
 }
 
 function errorReceiveCart(){
   return {type: ERR_RECV_CART};
-}
-
-export function addItem(item: Object, quantity: number): Object{
-  return ((dispatch) => {
-    let headers = getHeaders();
-    let itemDto = item;
-    itemDto.quantity = quantity;
-    return fetch('/cart/', {
-      method: 'PUT',
-      headers: headers,
-      body: JSON.stringify(itemDto)
-    })
-    .then(response => {
-      if(!response.ok){
-        throw Error(response.statusText);
-      }
-      if(headers.authorization === 'null'){
-        localStorage.setItem('authorization', response.headers.get('authorization'));
-      }
-      return response.json();
-    })
-    .then(json => dispatch(buildAction(ADD_ITEM, item, quantity)))
-    .catch(error => console.log('Could not add item.', error));
-  })
-}
-
-export function removeItem(item: Object): Object{
-  return buildAction(SUB_ITEM, item, 1);
-}
-
-export function buildAction(type: string, item: Object, quantity: number): Object{
-  return {type, item, quantity};
 }

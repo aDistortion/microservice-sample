@@ -50,6 +50,10 @@ module.exports = {
       '/cart': {
         target: 'http://localhost:8085',
         secure: false
+      },
+      '/product': {
+        target: 'http://localhost:8085',
+        secure: false
       }
     }
   }

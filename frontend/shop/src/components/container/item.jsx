@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col} from '../layout/generic.jsx';
 import {connect} from 'react-redux';
-import {addItem} from '../action/cartAction.jsx';
+import {addItem} from '../action/items.jsx';
 
 export class ItemCard extends React.Component{
   constructor(props){
