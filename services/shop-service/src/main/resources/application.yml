@@ -35,6 +35,9 @@ spring:
       discovery:
         #health-check-path: /shop/health
         fail-fast: false
+management:
+  security:
+    enabled: false
 flyway:
 #  enabled: false
   locations:
