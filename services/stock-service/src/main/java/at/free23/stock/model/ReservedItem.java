@@ -16,14 +16,14 @@ public class ReservedItem {
 	@EmbeddedId
 	private ReservedId id;
 
-	private Long amount;
+	private Integer amount;
 
 	private boolean shippingBooked = false;
 
 	public ReservedItem() {
 	}
 
-	public ReservedItem(Long itemId, String orderRef, Long amount) {
+	public ReservedItem(Long itemId, String orderRef, Integer amount) {
 		this.id = new ReservedId(itemId, orderRef);
 		this.amount = amount;
 	}
@@ -36,11 +36,11 @@ public class ReservedItem {
 		this.id = id;
 	}
 
-	public Long getAmount() {
+	public Integer getAmount() {
 		return this.amount;
 	}
 
-	public void setAmount(Long amount) {
+	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
 

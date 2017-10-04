@@ -32,7 +32,7 @@ public class StockServiceJpaImpl implements IStockService {
 	private ReservedItemRepository reservedRepo;
 
 	@Override
-	public Double reserveItem(String orderRef, String uuid, Long quantity) {
+	public Double reserveItem(String orderRef, String uuid, Integer quantity) {
 		final StockItem onStock = this.stockRepo.findByUuid(uuid);
 		if (onStock != null && onStock.getStored() >= quantity) {
 			onStock.setStored(onStock.getStored() - quantity);

@@ -40,7 +40,7 @@ spring:
       group-id: stock
   cloud:
     consul:
-      enabled: false
+      enabled: true
       host: consul
       port: 8500
       discovery:

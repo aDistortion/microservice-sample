@@ -15,7 +15,7 @@ public interface IStockService {
 	 * @param quantity
 	 * @return preparationTime
 	 */
-	public Double reserveItem(String orderRef, String uuid, Long quantity);
+	public Double reserveItem(String orderRef, String uuid, Integer quantity);
 
 	public void bookShipping(String orderRef);
 

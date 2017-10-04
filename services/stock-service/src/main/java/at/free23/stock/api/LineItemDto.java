@@ -1,17 +1,24 @@
 package at.free23.stock.api;
 
+import at.free23.stock.model.StockItem;
+
 public class LineItemDto {
 
 	private Long id;
 
-	private Long quantity;
+	private Integer quantity;
 
 	private String uuid;
 
 	public LineItemDto() {
 	}
 
-	public LineItemDto(Long id, Long quantity) {
+	public LineItemDto(StockItem item) {
+		this.uuid = item.getUuid();
+		this.quantity = item.getStored();
+	}
+
+	public LineItemDto(Long id, Integer quantity) {
 		this.id = id;
 		this.quantity = quantity;
 	}
@@ -24,11 +31,11 @@ public class LineItemDto {
 		this.id = id;
 	}
 
-	public Long getQuantity() {
+	public Integer getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(Long quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

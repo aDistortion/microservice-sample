@@ -31,6 +31,9 @@ public class ProductDto {
 	@JsonProperty("price")
 	private Double netAmount;
 
+	@JsonProperty("stock")
+	private Integer onStock;
+
 	private Long taxRate;
 
 	public ProductDto() {
@@ -140,5 +143,20 @@ public class ProductDto {
 	 */
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	/**
+	 * @return the onStock
+	 */
+	public Integer getOnStock() {
+		return this.onStock;
+	}
+
+	/**
+	 * @param onStock
+	 *            the onStock to set
+	 */
+	public void setOnStock(Integer onStock) {
+		this.onStock = onStock;
 	}
 }

@@ -29,11 +29,11 @@ spring:
       indent-output: true
   cloud:
     consul:
-      enabled: false
+      enabled: true
       host: consul
       port: 8500
       discovery:
-        health-check-path: /shop/health
+        #health-check-path: /shop/health
         fail-fast: false
 flyway:
 #  enabled: false

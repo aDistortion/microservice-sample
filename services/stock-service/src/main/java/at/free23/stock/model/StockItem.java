@@ -14,7 +14,7 @@ public class StockItem {
 	private String uuid;
 	private String name;
 
-	private Long stored;
+	private Integer stored;
 
 	private Double preparationTime;
 	private Double acquireTime;
@@ -22,7 +22,7 @@ public class StockItem {
 	public StockItem() {
 	}
 
-	public StockItem(String uuid, String name, Long stored, Double acquireTime, Double preparationTime) {
+	public StockItem(String uuid, String name, Integer stored, Double acquireTime, Double preparationTime) {
 		this.uuid = uuid;
 		this.name = name;
 		this.stored = stored;
@@ -38,11 +38,11 @@ public class StockItem {
 		this.id = id;
 	}
 
-	public Long getStored() {
+	public Integer getStored() {
 		return this.stored;
 	}
 
-	public void setStored(Long stored) {
+	public void setStored(Integer stored) {
 		this.stored = stored;
 	}
 

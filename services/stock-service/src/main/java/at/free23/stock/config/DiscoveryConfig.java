@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @author michael.vlasaty
  *
  */
+// TODO: disable for test
 @Configuration
 @EnableDiscoveryClient
 public class DiscoveryConfig {
