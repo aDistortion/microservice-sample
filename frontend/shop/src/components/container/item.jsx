@@ -59,6 +59,8 @@ class StockLabel extends React.Component{
     }else if(this.props.quantity <= 0){
       state = "danger";
       text = "Out of stock";
+    }else if(this.props.quantity == null){
+      text = "Currently not available"
     }
     return(
       <span className={"label label-"+state}>{text}</span>

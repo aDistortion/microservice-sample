@@ -3,6 +3,7 @@ import {Container, Row, Col} from '../layout/generic.jsx';
 import {ConnectedItemCard} from '../container/item.jsx';
 import {connect} from 'react-redux';
 
+//FIXME: render max 3 cols, not a col per item
 class ShopContainer extends React.Component{
   render(){
     return(
@@ -11,11 +12,7 @@ class ShopContainer extends React.Component{
         <hr/>
         <Row>
             {
-              this.props.products.map(product => {
-                <Col lg="4" md="4" xs="12">
-                  <ConnectedItemCard item={product} />
-                </Col>
-              })
+              this.props.products.map(product => <Col lg="4" md="4" xs="12" key={product.uuid}><ConnectedItemCard item={product} /></Col>)
             }
         </Row>
       </Container>

@@ -19,6 +19,15 @@ export default class Cart extends React.Component {
 
 class ItemTableContainer extends React.Component {
   render(){
+    //two dimensional array returned so we need to get the first element which is returned by second map call...
+    let productItems = this.props.items.map(
+      item => this.props.products.filter(
+        product => product.uuid == item.uuid)
+        .map(product => {
+          let productItem = product;
+          productItem.quantity = item.quantity;
+          return productItem;
+        })[0]);
     return(
       <table className="table table-striped">
         <thead>
@@ -31,13 +40,13 @@ class ItemTableContainer extends React.Component {
         </thead>
         <tbody>
           {
-            this.props.items.map(item => <ItemRow key={item.uuid} name={item.name} quantity={item.quantity} price={item.price}/>)
+            productItems.map(item => <ItemRow key={item.uuid} name={item.name} quantity={item.quantity} price={item.price}/>)
           }
           <tr>
             <td>Total</td>
-            <td>{this.props.items.reduce((sum, item) => sum+item.quantity, 0)}</td>
+            <td>{productItems.reduce((sum, item) => sum+item.quantity, 0)}</td>
             <td>-</td>
-            <td>{this.props.items.reduce((sum, item) => sum+item.price*item.quantity, 0)}</td>
+            <td>{productItems.reduce((sum, item) => sum+item.price*item.quantity, 0)}</td>
           </tr>
         </tbody>
       </table>
@@ -45,7 +54,8 @@ class ItemTableContainer extends React.Component {
   }
 }
 const mapStateToProps = (state) => ({
-  items: state.cart.items
+  items: state.cart.items,
+  products: state.shop.products
 })
 
 //TODO: propagate onAddItem to ItemRow
