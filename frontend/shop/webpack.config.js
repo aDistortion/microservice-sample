@@ -11,6 +11,8 @@ const HtmlWebpackConfigIndex = new HtmlWebpackPlugin({
 const distDir = path.resolve(__dirname, './dist');
 const srcDir = path.resolve(__dirname, './src');
 
+const pathRewriteVal = {'^/api': ''};
+
 module.exports = {
   entry: srcDir + '/index.js',
   output: {
@@ -43,17 +45,26 @@ module.exports = {
     compress: true,
     port: 8080,
     proxy: {
-      '/order-process': {
+      '/api/order-process': {
         target: 'http://localhost:8084',
-        secure: false
+        secure: false,
+        pathRewrite: pathRewriteVal
       },
-      '/cart': {
+      '/api/cart': {
         target: 'http://localhost:8085',
-        secure: false
+        secure: false,
+        pathRewrite: pathRewriteVal
       },
-      '/product': {
+      '/api/product': {
         target: 'http://localhost:8085',
-        secure: false
+        secure: false,
+        pathRewrite: pathRewriteVal
+      },
+      /*Redirect for order-process client not possible as /order/index.html points to /app.bundle.js which is the shop bundle for some reason...*/
+      '/order/**': {
+        target: 'http://localhost:8180/',
+        secure: false,
+        pathRewrite: {'^/order': ''}
       }
     }
   }
