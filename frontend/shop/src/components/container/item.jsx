@@ -1,75 +1,62 @@
+// @flow
 import React from 'react';
-import {Col} from '../layout/generic.jsx';
 import {connect} from 'react-redux';
-import {addItem} from '../action/items.jsx';
 
-export class ItemCard extends React.Component{
-  constructor(props){
-    super(props);
-    this.addToCart = this.addToCart.bind(this);
-    this.changeQuantity = this.changeQuantity.bind(this);
-    this.state = {quantity: 1}
-  }
-
-  changeQuantity(event){
-    this.setState({quantity: Number.parseInt(event.target.value, 10)});
-  }
-
-  addToCart(event){
-    event.preventDefault();
-    this.props.onAddToCart(this.props.item, this.state.quantity);
-    this.setState({quantity: 1});
-  }
-
+class ItemTableContainer extends React.Component {
   render(){
+    //two dimensional array returned so we need to get the first element which is returned by second map call...
+    let productItems = this.props.items.map(
+      item => this.props.products.filter(
+        product => product.uuid == item.uuid)
+        .map(product => {
+          let productItem = product;
+          productItem.quantity = item.quantity;
+          return productItem;
+        })[0]);
     return(
-      <div className="panel panel-default">
-        <div className="panel-body" style={{padding: 10+'px', height: 275+'px'}}>
-          <Col lg="6" md="6" xs="7">
-            <div className="placeholder" style={{width: 100+'%', height: 250+'px'}} ></div>
-          </Col>
-          <Col lg="6" md="6" xs="5" style={{padding: 0+'px'}}>
-            <ul style={{listStyleType: 'none', padding: 0}}>
-              <li style={{fontSize: 1.2+'em'}}>{this.props.item.vendor}</li>
-              <li><strong>{this.props.item.name}</strong></li>
-              <li>{this.props.item.type}</li>
-              <li>{this.props.item.country}</li>
-              <li><strong>EUR {this.props.item.price}</strong></li>
-              <li><StockLabel quantity={this.props.item.stock}/></li>
-            </ul>
-            <form className="text-center" onSubmit={this.addToCart}>
-              <div className="form-group">
-                <input type="number" className="form-control" id="quantityInput" min="0" value={this.state.quantity} onChange={this.changeQuantity}></input>
-              </div>
-              <button type="submit" className="btn btn-success" style={{width: 100+'%'}} >Add to cart</button>
-            </form>
-          </Col>
-        </div>
-      </div>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Item Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            productItems.map(item => <ItemRow key={item.uuid} name={item.name} quantity={item.quantity} price={item.price}/>)
+          }
+          <tr>
+            <td>Total</td>
+            <td>{productItems.reduce((sum, item) => sum+item.quantity, 0)}</td>
+            <td>-</td>
+            <td>{productItems.reduce((sum, item) => sum+item.price*item.quantity, 0)} <span className="glyphicon glyphicon-yen" aria-hidden="true"></span></td>
+          </tr>
+        </tbody>
+      </table>
     );
   }
 }
 
-class StockLabel extends React.Component{
+//TODO: add a button for increasing/decreasing the quantity
+class ItemRow extends React.Component {
   render(){
-    let state = "warning";
-    let text = this.props.quantity + " Available";
-    if(this.props.quantity > 3){
-      state = "success";
-    }else if(this.props.quantity <= 0){
-      state = "danger";
-      text = "Out of stock";
-    }else if(this.props.quantity == null){
-      text = "Currently not available"
-    }
     return(
-      <span className={"label label-"+state}>{text}</span>
+      <tr>
+        <td>{this.props.name}</td>
+        <td>{this.props.quantity}</td>
+        <td>{this.props.price} <span className="glyphicon glyphicon-yen" aria-hidden="true"></span></td>
+        <td>{(this.props.quantity * this.props.price).toFixed(2)} <span className="glyphicon glyphicon-yen" aria-hidden="true"></span></td>
+      </tr>
     );
   }
 }
 
-const mapDispatchToProps = {
-  onAddToCart: addItem
-};
-  
-export const ConnectedItemCard = connect(null,mapDispatchToProps)(ItemCard);
+const mapStateToProps = (state) => ({
+  items: state.cart.items,
+  products: state.shop.products
+})
+
+const ItemTable = connect(mapStateToProps)(ItemTableContainer);
+export default ItemTable;

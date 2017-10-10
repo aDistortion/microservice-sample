@@ -22,7 +22,7 @@ export function addItem(item: Object, quantity: number): Object{
   return ((dispatch) => {
     let headers = getHeaders();
     let itemDto = {uuid: item.uuid, quantity: quantity};
-    return fetch('/cart/', {
+    return fetch('/api/cart/', {
       method: 'PUT',
       headers: headers,
       body: JSON.stringify(itemDto)

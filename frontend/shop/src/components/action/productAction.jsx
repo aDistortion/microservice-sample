@@ -1,6 +1,8 @@
 // @flow
 
-import {FETCHING_PRODUCTS, FETCHED_PRODUCTS, ERR_RECV_PRODUCTS} from './shopAction.jsx';
+export const FETCHING_PRODUCTS: string = 'FETCHING_PRODUCTS';
+export const ERR_RECV_PRODUCTS: string = 'ERR_RECV_PRODUCTS';
+export const FETCHED_PRODUCTS: string = 'FETCHED_PRODUCTS';
 
 export const RECV_PRODUCTS: string = 'RECV_PRODUCTS';
 
@@ -12,7 +14,7 @@ const headers: Object = {
 export function fetchProducts(): Object{
   return (dispatch) => {
     dispatch({type: FETCHING_PRODUCTS});
-    fetch('/product/', {
+    fetch('/api/product/', {
       method: 'GET',
       headers: headers
     })

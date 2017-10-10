@@ -2,7 +2,6 @@
 import React from 'react';
 import LoginButton from '../auth/login.jsx';
 import { BrowserRouter as Router, Switch, Link, Route, browserHistory } from 'react-router-dom';
-import { HttpClient } from '../api/httpClient.jsx';
 import { connect } from 'react-redux';
 
 export default class ShopNavbar extends React.Component {
@@ -38,7 +37,6 @@ class NavContainer extends React.Component {
     isAuthenticated: boolean,
     profile: any
   };
-  httpClient: HttpClient;
   
   handleLogin: Function;
   handleLogout: Function;
@@ -47,14 +45,8 @@ class NavContainer extends React.Component {
   //TODO: hydrate with server state, should be done with store.dispatch
   constructor(props){
     super(props);
-    this.httpClient = new HttpClient();
     this.state = {isAuthenticated: props.isAuthenticated, profile: {}};
-    this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
-  }
-
-  handleLogin(event: Event){
-    this.httpClient.get('/order-process/rest/engine/default/user/admin/profile', (res) => (this.setState({isAuthenticated: true, profile: res})));
   }
 
   handleLogout(event: Event){
@@ -68,7 +60,7 @@ class NavContainer extends React.Component {
     }
     return(
       <ul className="nav navbar-nav navbar-right">
-        <li><Link to="/cart">Cart <span className="badge" style={{backgroundColor: badgeColor}}>{this.props.itemCount}</span></Link></li>
+        <li><Link to="/cart"><span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart <span className="badge" style={{backgroundColor: badgeColor}}>{this.props.itemCount}</span></Link></li>
         { this.state.isAuthenticated ? 
           <li className="dropdown">
             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span className="caret"></span></a>
@@ -81,7 +73,7 @@ class NavContainer extends React.Component {
             </ul>
           </li>
         :
-          <li><LoginButton isAuthenticated={this.state.isAuthenticated} handleClick={this.handleLogin}/></li>
+          <li><LoginButton isAuthenticated={this.state.isAuthenticated} /></li>
         }
       </ul>
     );

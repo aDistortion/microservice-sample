@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Link, Route, browserHistory } from 'react-router-dom';
 import { AppSwitch } from './nav/routes.jsx';
 import ShopNavbar from './nav/navbar.jsx';
-import Shop from './sites/shop.jsx';
-import History from './sites/history.jsx';
-import Cart from './sites/cart.jsx';
-import Settings from './sites/settings.jsx';
+import Shop from './container/shop.jsx';
+import Cart from './container/cart.jsx';
+//import History from './container/history.jsx';
+//import Settings from './container/settings.jsx';
 
 export default class App extends React.Component {
   constructor(props){

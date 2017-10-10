@@ -1,7 +1,8 @@
 // @flow
 
 import { combineReducers } from 'redux';
-import { FETCHING_PRODUCTS, ERR_RECV_PRODUCTS, FETCHED_PRODUCTS } from '../action/shopAction.jsx';
+import { FETCHING_PRODUCTS, ERR_RECV_PRODUCTS, FETCHED_PRODUCTS } from '../action/productAction.jsx';
+import {CHECKOUT_CART} from '../action/shopAction.jsx';
 import products from './products.jsx';
 
 const initShop = {
@@ -24,6 +25,8 @@ const shopReducer = (state: Object = initShop, action: Object) => {
       newState.fetchingProducts = false;
       newState.productsError = false;
       break;
+    case CHECKOUT_CART:
+      console.log("Checking out cart...");
   }
   return newState;
 }

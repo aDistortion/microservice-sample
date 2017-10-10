@@ -39,14 +39,18 @@ export function initCart(){
   return( (dispatch) => {
     let headers = getHeaders();
     dispatch(getCart());
-    return fetch('/cart/', {
+    return fetch('/api/cart/', {
       method: 'GET',
-      headers: headers
+      headers: headers,
+      redirect: 'manual'
     })
     .then(
       (response) => {
         if(!response.ok){
           throw Error(response.statusText);
+        }
+        if(response.redirected){
+          console.log("Redirected headers:"+response.headers);
         }
         if(headers.authorization === 'null'){
           localStorage.setItem('authorization', response.headers.get('authorization'));
