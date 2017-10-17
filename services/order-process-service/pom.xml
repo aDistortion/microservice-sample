@@ -19,7 +19,8 @@
 
 	<properties>
 		<camunda.bom.version>7.7.0</camunda.bom.version>
-		<camunda.boot.version>2.1.2</camunda.boot.version>
+		<camunda.boot.version>2.2.0</camunda.boot.version>
+		<camunda.spin.bom.version>1.4.0</camunda.spin.bom.version>
 	</properties>
 	
 	<repositories>
@@ -45,6 +46,13 @@
 				<groupId>org.camunda.bpm</groupId>
 				<artifactId>camunda-bom</artifactId>
 				<version>${camunda.bom.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.camunda.spin</groupId>
+				<artifactId>camunda-spin-bom</artifactId>
+				<version>${camunda.spin.bom.version}</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>

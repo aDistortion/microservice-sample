@@ -42,10 +42,11 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   cloud:
     consul:
+      enabled: true
       host: consul
       port: 8500
       discovery:
-        health-check-path: /order-process/health
+#        health-check-path: /order-process/health
         fail-fast: false
 camunda:
   bpm:
@@ -68,3 +69,7 @@ camunda:
     admin-user:
       id: admin
       password: demo
+order:
+  instance-id: order-service
+  create:
+    uri-prefix: /createOrder

@@ -11,13 +11,13 @@ import java.util.List;
  */
 public class OrderPayload extends TransactionPayload {
 
-	private List<LineItem> lineItems;
+	private List<LineItemDto> lineItems;
 
-	public List<LineItem> getLineItems() {
+	public List<LineItemDto> getLineItems() {
 		return this.lineItems;
 	}
 
-	public void setLineItems(List<LineItem> lineItems) {
+	public void setLineItems(List<LineItemDto> lineItems) {
 		this.lineItems = lineItems;
 	}
 }

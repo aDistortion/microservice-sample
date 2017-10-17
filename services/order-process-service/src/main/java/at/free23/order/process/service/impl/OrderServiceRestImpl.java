@@ -8,17 +8,17 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import at.free23.order.process.api.LineItem;
-import at.free23.order.process.api.Order;
+import at.free23.order.process.api.ItemDto;
+import at.free23.order.process.api.OrderDto;
 import at.free23.order.process.service.IOrderService;
 
 /**
@@ -36,32 +36,58 @@ public class OrderServiceRestImpl implements IOrderService {
 
 	private static final Logger logger = LoggerFactory.getLogger(OrderServiceRestImpl.class);
 
-	private static final String SERVICE_ID = "order-service";
+	@Value("${order.instance-id}")
+	private String serviceId;
+
+	@Value("${order.create.uri-prefix}")
+	private String createUriPrefix;
 
 	@Override
-	public Order createOrder(Order newOrder) {
-		final String uri = this.getInstance(SERVICE_ID);
+	public OrderDto createOrder(String tenantId, List<ItemDto> items) {
+		final OrderDto newOrder = new OrderDto(tenantId, items);
+		final String uri = this.getOrderInstance() + this.createUriPrefix;
 
-		final ResponseEntity<Resource<Order>> response = this.restTemplate.exchange(uri + "/order", HttpMethod.POST,
-				new HttpEntity<>(newOrder), new ParameterizedTypeReference<Resource<Order>>() {
+		final ResponseEntity<OrderDto> response = this.restTemplate.exchange(uri, HttpMethod.POST,
+				new HttpEntity<>(newOrder), new ParameterizedTypeReference<OrderDto>() {
 		});
 
-		final Order createdOrder = response.getBody().getContent();
+		final OrderDto createdOrder = response.getBody();
 		logger.info("Created order " + createdOrder.getOrderRef());
-
-		// spring data rest forces a second call for many to many relations with
-		// extra columns...
-		this.addLineItem(createdOrder, newOrder.getLineItems());
 
 		return createdOrder;
 	}
 
-	private void addLineItem(Order order, List<LineItem> items) {
-		final String uri = this.getInstance(SERVICE_ID);
-
+	private String getOrderInstance() {
+		return this.discoveryClient.getInstances(this.serviceId).get(0).getUri().toString();
 	}
 
-	private String getInstance(String serviceId) {
-		return this.discoveryClient.getInstances(SERVICE_ID).get(0).getUri().toString();
+	/**
+	 * @return the serviceId
+	 */
+	public String getServiceId() {
+		return this.serviceId;
+	}
+
+	/**
+	 * @param serviceId
+	 *            the serviceId to set
+	 */
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
+	}
+
+	/**
+	 * @return the createUriPrefix
+	 */
+	public String getCreateUriPrefix() {
+		return this.createUriPrefix;
+	}
+
+	/**
+	 * @param createUriPrefix
+	 *            the createUriPrefix to set
+	 */
+	public void setCreateUriPrefix(String createUriPrefix) {
+		this.createUriPrefix = createUriPrefix;
 	}
 }

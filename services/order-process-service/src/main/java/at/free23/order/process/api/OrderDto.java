@@ -5,16 +5,25 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Order {
+public class OrderDto {
 
 	private String id;
-
 	private String orderRef;
 
-	private List<LineItem> lineItems;
+	private String tenantId;
+	private List<ItemDto> lineItems;
 
-	private boolean paymentRecieved = false;
+	private boolean paymentRecieved;
 
+	public OrderDto() {
+
+	}
+
+	public OrderDto(String tenantId, List<ItemDto> lineItems) {
+		this.tenantId = tenantId;
+		this.lineItems = lineItems;
+		this.paymentRecieved = false;
+	}
 	public String getId() {
 		return this.id;
 	}
@@ -23,11 +32,11 @@ public class Order {
 		this.id = id;
 	}
 
-	public List<LineItem> getLineItems() {
+	public List<ItemDto> getLineItems() {
 		return this.lineItems;
 	}
 
-	public void setLineItems(List<LineItem> lineItems) {
+	public void setLineItems(List<ItemDto> lineItems) {
 		this.lineItems = lineItems;
 	}
 
@@ -46,4 +55,20 @@ public class Order {
 	public void setOrderRef(String orderRef) {
 		this.orderRef = orderRef;
 	}
+
+	/**
+	 * @return the tenantId
+	 */
+	public String getTenantId() {
+		return this.tenantId;
+	}
+
+	/**
+	 * @param tenantId
+	 *            the tenantId to set
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
+
 }

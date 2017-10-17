@@ -16,6 +16,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,6 +41,12 @@ public abstract class AbstractBaseTask implements JavaDelegate {
 	public abstract void execute(DelegateExecution exec) throws Exception;
 
 	protected <T> T getVariable(String key, DelegateExecution exec, Class<T> type)
+			throws JsonParseException, JsonMappingException, IOException {
+		final ObjectValue orderVal = exec.getVariableTyped("order");
+		return this.mapper.readValue(orderVal.getValueSerialized(), type);
+	}
+
+	protected <T> T getVariable(String key, DelegateExecution exec, TypeReference<T> type)
 			throws JsonParseException, JsonMappingException, IOException {
 		final ObjectValue orderVal = exec.getVariableTyped("order");
 		return this.mapper.readValue(orderVal.getValueSerialized(), type);
