@@ -1,12 +1,14 @@
 /**
  *
  */
-package at.free23.shop.api;
+package at.free23.shop.api.client;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.collect.Lists;
 
 import at.free23.shop.model.Cart;
@@ -14,9 +16,10 @@ import at.free23.shop.model.Cart;
 /**
  * @author michael.vlasaty
  *
+ *         Client DTO / Message DTO
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-// @JsonInclude(Include.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public class CartDto {
 
 	private List<ItemDto> items;
@@ -40,4 +43,5 @@ public class CartDto {
 	public void setItems(List<ItemDto> items) {
 		this.items = items;
 	}
+
 }

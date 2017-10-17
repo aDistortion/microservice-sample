@@ -6,5 +6,5 @@ spring:
       host: ${CONSUL_SERVER:localhost}
       port: 8500
       config:
-        fail-fast: true
+        fail-fast: false
         format: yaml

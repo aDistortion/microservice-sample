@@ -1,7 +1,7 @@
 /**
  *
  */
-package at.free23.shop.api;
+package at.free23.shop.api.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,8 +13,9 @@ import at.free23.shop.model.Product;
 /**
  * @author michael.vlasaty
  *
+ *         Client DTO
+ *
  */
-// FIXME: this one is not used...
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
 public class ProductDto {

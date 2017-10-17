@@ -1,7 +1,7 @@
 /**
  *
  */
-package at.free23.shop.api;
+package at.free23.shop.api.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,6 +13,7 @@ import at.free23.shop.model.Item;
 /**
  * @author michael.vlasaty
  *
+ *         Client DTO / Message DTO
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)

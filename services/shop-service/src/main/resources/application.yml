@@ -27,14 +27,27 @@ spring:
     serialization:
       write-dates-as-timestamps: false
       indent-output: true
+  kafka:
+    client-id: shop-service
+    bootstrap-servers:
+      - ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+    template:
+      default-topic: shop
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: shop
   cloud:
     consul:
-      enabled: true
       host: consul
       port: 8500
       discovery:
         #health-check-path: /shop/health
         fail-fast: false
+  h2:
+    console:
+      enabled: true
 management:
   security:
     enabled: false
@@ -43,3 +56,11 @@ flyway:
   locations:
     - classpath:db/migration
     - classpath:db/data
+check-out:
+  url: /order
+  service-id: order-process-service
+  process-key: orderProcess
+stock:
+  instance-id:  stock-service
+  item:
+    uri-prefix: /stockItem/

@@ -3,6 +3,9 @@
  */
 package at.free23.shop.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.LocalDateTime;
@@ -17,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Strings;
 
-import at.free23.shop.api.CartDto;
-import at.free23.shop.api.ItemDto;
+import at.free23.shop.api.client.CartDto;
+import at.free23.shop.api.client.ItemDto;
 import at.free23.shop.model.Cart;
-import at.free23.shop.service.CartService;
+import at.free23.shop.service.ICartService;
 
 /**
  * @author michael.vlasaty
@@ -31,7 +34,8 @@ import at.free23.shop.service.CartService;
 public class CartController {
 
 	@Autowired
-	private CartService cartService;
+	private ICartService cartService;
+
 
 	/**
 	 * Interceptor um mandanten id konsistent bereit zu stellen.
@@ -47,33 +51,34 @@ public class CartController {
 		return tenantId;
 	}
 
+	@ModelAttribute
+	public void setAuthorizationHeader(@ModelAttribute("tenantId") String tenantId, HttpServletResponse response) {
+		response.setHeader("Authorization", tenantId);
+	}
+
 	@RequestMapping(path = "/", method = RequestMethod.GET)
-	public @ResponseBody CartDto getCart(@ModelAttribute("tenantId") String tenantId, HttpServletResponse resp) {
-
-		// TODO: abstract this call into some interceptor...
-		resp.setHeader("Authorization", tenantId);
-
+	public @ResponseBody CartDto getCart(@ModelAttribute("tenantId") String tenantId) {
 		final Cart cart = this.cartService.fetchCart(tenantId);
 		return new CartDto(cart);
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.PUT)
-	public @ResponseBody CartDto addItem(@ModelAttribute("tenantId") String tenantId, @RequestBody ItemDto item,
-			HttpServletResponse resp) {
-
-		resp.setHeader("Authorization", tenantId);
+	public @ResponseBody CartDto addItem(@ModelAttribute("tenantId") String tenantId, @RequestBody ItemDto item) {
 		final Cart cart = this.cartService.addItem(tenantId, item);
 		return new CartDto(cart);
 	}
 
 	@RequestMapping(path = "/", method = RequestMethod.DELETE)
-	public @ResponseBody CartDto removeItem(@ModelAttribute("tenantId") String tenantId, @RequestBody ItemDto item,
-			HttpServletResponse resp) {
-		resp.setHeader("Authorization", tenantId);
+	public @ResponseBody CartDto removeItem(@ModelAttribute("tenantId") String tenantId, @RequestBody ItemDto item) {
 		final Cart cart = this.cartService.removeItem(tenantId, item);
 		return new CartDto(cart);
 	}
 
-	// @RequestMapping(path = "/checkOut", method = RequestMethod.GET)
-	// public ResponseEntity
+	@RequestMapping(path = "/startCheckOut/", method = RequestMethod.GET)
+	public Map<String, String> redirectToOrderProcess(@ModelAttribute("tenantId") String tenantId) {
+		final String redirectUrl = this.cartService.checkOutCart(tenantId);
+		final HashMap<String, String> dto = new HashMap<>();
+		dto.put("url", redirectUrl);
+		return dto;
+	}
 }
