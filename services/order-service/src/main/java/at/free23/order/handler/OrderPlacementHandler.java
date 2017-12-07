@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import at.free23.order.api.OrderEvent;
-import at.free23.order.api.OrderPayload;
 import at.free23.order.api.TransactionPayload;
 import at.free23.order.model.Order;
 
@@ -45,9 +43,10 @@ public class OrderPlacementHandler {
 
 	@AfterReturning(pointcut = "execution(* at.free23.order.service.IOrderService.createOrder(..))", returning = "newOrder")
 	public void onCreated(Order newOrder){
-		final OrderPayload payload = new OrderPayload(newOrder.getOrderRef(), OrderEvent.ORDER_RCV,
-				newOrder.getOrderLineItems());
-		this.template.send("order", payload);
+		// final OrderPayload payload = new OrderPayload(newOrder.getOrderRef(),
+		// OrderEvent.ORDER_RCV,
+		// newOrder.getLineItems());
+		// this.template.send("order", payload);
 		LOGGER.info("New order has been placed");
 	}
 

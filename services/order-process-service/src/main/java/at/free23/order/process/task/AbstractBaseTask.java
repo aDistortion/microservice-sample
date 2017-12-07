@@ -9,6 +9,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.variable.Variables;
 import org.camunda.bpm.engine.variable.value.ObjectValue;
+import org.camunda.bpm.engine.variable.value.TypedValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +43,18 @@ public abstract class AbstractBaseTask implements JavaDelegate {
 
 	protected <T> T getVariable(String key, DelegateExecution exec, Class<T> type)
 			throws JsonParseException, JsonMappingException, IOException {
-		final ObjectValue orderVal = exec.getVariableTyped("order");
-		return this.mapper.readValue(orderVal.getValueSerialized(), type);
+		final TypedValue typedVal = exec.getVariableTyped(key);
+		if (typedVal.getType().isPrimitiveValueType()) {
+			return type.cast(typedVal.getValue());
+		} else {
+			final ObjectValue objectVal = exec.getVariableTyped(key);
+			return this.mapper.readValue(objectVal.getValueSerialized(), type);
+		}
 	}
 
 	protected <T> T getVariable(String key, DelegateExecution exec, TypeReference<T> type)
 			throws JsonParseException, JsonMappingException, IOException {
-		final ObjectValue orderVal = exec.getVariableTyped("order");
+		final ObjectValue orderVal = exec.getVariableTyped(key);
 		return this.mapper.readValue(orderVal.getValueSerialized(), type);
 	}
 

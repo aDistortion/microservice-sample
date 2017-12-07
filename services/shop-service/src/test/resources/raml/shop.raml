@@ -1,0 +1,113 @@
+#%RAML 1.0
+title: Shop Rest
+baseUri: http://shop.sample.com/api
+version: 1.0
+
+types:
+  Cart:
+    type: object
+    properties:
+      items:
+        type: Item[]
+    example: !include example/cart.json
+  Item:
+    type: object
+    properties: 
+      uuid:
+        type: string
+      quantity:
+        type: number
+    example: !include example/item.json
+  Product:
+    type: object
+    properties: 
+      uuid:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      type:
+        type: string
+      imgUrl:
+        type: string
+      price:
+        type: number
+      stock:
+        type: number
+      vendor:
+        type: string
+      country:
+        type: string
+    example: !include example/product.json
+
+traits: 
+  secured:
+    headers:
+        Authorization:
+          description: Authorization token
+          required: true
+          example: Bearer0xazshd12saln1028aosnds=
+
+/product:
+  displayName: Product
+  description: Controller for retrieving product information.
+  /:
+    get:
+      description: Get a list of products
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: Product[]
+
+/cart:
+  displayName: Cart
+  description: Controller for interacting with the tenants cart. Each request has to be secured with a valid authorization token.
+  /:
+    get:
+      is: [ secured ]
+      description: Fetch the cart for the respective tenant.
+      responses: 
+        200:
+          description: If no authorization header is provided a initialized cart and an anonymous auth token will be returned.
+          body: 
+            application/json:
+              type: Cart
+    put:
+      is: [ secured ]
+      description: Add the given amount of items to the tenants cart
+      body: 
+        application/json:
+          type: Item
+      responses: 
+        200:
+          description: Returns the updated cart
+          body: 
+            application/json:
+              type: Cart
+    delete:
+      is: [ secured ]
+      description: Remove an item from the cart
+      body: 
+        application/json:
+          type: Item
+      responses: 
+        200:
+          description: Returns the updated cart and removes the given item if the amount is greater or equal to the carts amount
+          body:
+            application/json:
+              type: Cart
+  /startCheckOut/:
+    get:
+      is: [ secured ]
+      description: Start the checkout process
+      responses: 
+        200:
+          description: Returns a checkout URL which points to the location of the process client. This URL has to be treated as new window location of the browser.
+          body: 
+            application/json:
+              example: |
+                {
+                  "url": "/checkOut?checkOutId=1234"
+                }

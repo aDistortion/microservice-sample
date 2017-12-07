@@ -1,0 +1,11 @@
+{
+  "uudi": "aUuid",
+  "name": "aName",
+  "description": "A description",
+  "type": "aType",
+  "imgUrl": "/aImage.jpg",
+  "vendor": "aVendor",
+  "country": "aCountry",
+  "price": 1.99,
+  "stock": 23
+}

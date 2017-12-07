@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import at.free23.order.model.Order;
+import at.free23.order.api.OrderDto;
+import at.free23.order.converter.OrderConverter;
+import at.free23.order.converter.OrderDtoConverter;
 import at.free23.order.service.IOrderService;
 
 /**
@@ -24,11 +26,14 @@ public class OrderController {
 	@Autowired
 	private IOrderService service;
 
-	// @Autowired
-	// private OrderLineItemsRepository assocRepo;
+	@Autowired
+	private OrderDtoConverter dtoConverter;
+
+	@Autowired
+	private OrderConverter orderConverter;
 
 	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
-	public @ResponseBody Order createOrder(@RequestBody Order newOrder) {
-		return this.service.createOrder(newOrder);
+	public @ResponseBody OrderDto createOrder(@RequestBody OrderDto newOrder) {
+		return this.orderConverter.convert(this.service.createOrder(this.dtoConverter.convert(newOrder)));
 	}
 }

@@ -1,5 +1,6 @@
 package at.free23.order.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,30 +22,40 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgen")
 	@SequenceGenerator(name = "idgen", sequenceName = "order_id_sequence", allocationSize = 1, initialValue = 1)
-	private Long orderId;
+	private Long id;
 
 	private String orderRef;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	@OrderColumn(name = "positionNo")
-	private List<OrderLineItem> orderLineItems;
+	private List<LineItem> lineItems;
 
+	private String tenantId;
+
+	private LocalDateTime created;
 	private boolean paymentRecieved = false;
 
-	public Long getOrderId() {
-		return this.orderId;
+	public Order() {
+
 	}
 
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
+	public Order(List<LineItem> items) {
+		this.lineItems = items;
 	}
 
-	public List<OrderLineItem> getOrderLineItems() {
-		return this.orderLineItems;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setOrderLineItems(List<OrderLineItem> orderLineItems) {
-		this.orderLineItems = orderLineItems;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<LineItem> getLineItems() {
+		return this.lineItems;
+	}
+
+	public void setLineItems(List<LineItem> lineItems) {
+		this.lineItems = lineItems;
 	}
 
 	public boolean isPaymentRecieved() {
@@ -67,5 +77,35 @@ public class Order {
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this);
+	}
+
+	/**
+	 * @return the tenantId
+	 */
+	public String getTenantId() {
+		return this.tenantId;
+	}
+
+	/**
+	 * @param tenantId
+	 *            the tenantId to set
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
+
+	/**
+	 * @return the created
+	 */
+	public LocalDateTime getCreated() {
+		return this.created;
+	}
+
+	/**
+	 * @param created
+	 *            the created to set
+	 */
+	public void setCreated(LocalDateTime created) {
+		this.created = created;
 	}
 }

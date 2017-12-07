@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class CancelOrder extends AbstractBaseTask {
+public class CancleOrder extends AbstractBaseTask {
 
 	@Override
 	public void execute(DelegateExecution exec) throws Exception {

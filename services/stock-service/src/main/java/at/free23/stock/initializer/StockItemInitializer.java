@@ -23,8 +23,8 @@ public class StockItemInitializer {
 
 	@PostConstruct
 	public void init() {
-		this.stockRepo.save(new StockItem("green-goose", "Indian Pale Ale", 10, 5D, 5D));
-		this.stockRepo.save(new StockItem("petrus", "Craft Beer", 3, 3D, 3D));
-		this.stockRepo.save(new StockItem("muenchner-hell", "Beer", 0, 1D, 1D));
+		this.stockRepo.save(new StockItem("green-goose", "Indian Pale Ale", 10, "vienna02", 5D, 5D));
+		this.stockRepo.save(new StockItem("petrus", "Craft Beer", 3, "paris01", 5D, 5D));
+		this.stockRepo.save(new StockItem("muenchner-hell", "Beer", 0, "frankfurt01", 5D, 10D));
 	}
 }

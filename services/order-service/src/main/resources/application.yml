@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8086
 spring:
   application:
     name: order-service
@@ -45,7 +45,7 @@ spring:
       #enable-auto-commit: false
   cloud:
     consul:
-      enabled: false
+#      enabled: false
       host: consul
       port: 8500
       discovery:

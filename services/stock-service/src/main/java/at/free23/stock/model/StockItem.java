@@ -16,18 +16,22 @@ public class StockItem {
 
 	private Integer stored;
 
+	private String locationId;
+
 	private Double preparationTime;
 	private Double acquireTime;
 
 	public StockItem() {
 	}
 
-	public StockItem(String uuid, String name, Integer stored, Double acquireTime, Double preparationTime) {
+	public StockItem(String uuid, String name, Integer stored, String locationId, Double acquireTime,
+			Double preparationTime) {
 		this.uuid = uuid;
 		this.name = name;
 		this.stored = stored;
 		this.acquireTime = acquireTime;
 		this.preparationTime = preparationTime;
+		this.locationId = locationId;
 	}
 
 	public Long getId() {
@@ -76,6 +80,21 @@ public class StockItem {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the locationId
+	 */
+	public String getLocationId() {
+		return this.locationId;
+	}
+
+	/**
+	 * @param locationId
+	 *            the locationId to set
+	 */
+	public void setLocationId(String locationId) {
+		this.locationId = locationId;
 	}
 
 }

@@ -14,5 +14,5 @@ import at.free23.order.model.LineItem;
  */
 @RepositoryRestResource(collectionResourceRel = "lineItem", path = "lineItem")
 public interface LineItemRepository extends PagingAndSortingRepository<LineItem, Long> {
-
+	public LineItem findByUuid(String uuid);
 }

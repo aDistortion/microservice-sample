@@ -32,28 +32,54 @@
     <bpmn:transaction id="SubProcess_shipmentDataInput" name="Shipment data input">
       <bpmn:incoming>SequenceFlow_0g1s0sw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1pkgv80</bpmn:outgoing>
-      <bpmn:userTask id="Task_provideAddressData" name="Provide shipping address" camunda:assignee="${initUser}">
+      <bpmn:userTask id="ProvideAddressData" name="Provide shipping address" camunda:assignee="${initUser}">
+        <bpmn:extensionElements>
+          <camunda:formData>
+            <camunda:formField id="street" label="Street" type="string">
+              <camunda:validation>
+                <camunda:constraint name="validator" config="${customValidator}" />
+                <camunda:constraint name="maxlength" config="25" />
+              </camunda:validation>
+            </camunda:formField>
+            <camunda:formField id="city" label="City" type="string" />
+            <camunda:formField id="streetNo" label="Street No" type="string" />
+            <camunda:formField id="zip" label="ZIP" type="string" />
+            <camunda:formField id="differentInvoiceAddress" label="Is invoicing address different?" type="boolean" defaultValue="false" />
+            <camunda:formField id="invoice_city" label="City" type="string">
+              <camunda:properties>
+                <camunda:property id="testProperty" value="justAtest" />
+              </camunda:properties>
+            </camunda:formField>
+            <camunda:formField id="invoice_zip" label="ZIP" type="string" />
+            <camunda:formField id="invoice_street" label="Street" type="string" />
+            <camunda:formField id="invoice_streetNo" label="Street No" type="string" />
+            <camunda:formField id="firstName" label="First name" type="string" />
+            <camunda:formField id="lastName" label="Last name" type="string" />
+            <camunda:formField id="invoice_firstName" label="First name" type="string" />
+            <camunda:formField id="invoice_lastName" label="Last name" type="string" />
+          </camunda:formData>
+        </bpmn:extensionElements>
         <bpmn:incoming>SequenceFlow_19mtvha</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_0irswlu</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="Task_choosePaymentMethod" name="Choose payment method" camunda:formKey="embedded:app:paymentMethod.html" camunda:assignee="${initUser}">
+      <bpmn:userTask id="ChoosePaymentMethod" name="Choose payment method" camunda:formKey="embedded:app:paymentMethod.html" camunda:assignee="${initUser}">
         <bpmn:incoming>SequenceFlow_0irswlu</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_023fx4b</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:sequenceFlow id="SequenceFlow_0irswlu" sourceRef="Task_provideAddressData" targetRef="Task_choosePaymentMethod" />
+      <bpmn:sequenceFlow id="SequenceFlow_0irswlu" sourceRef="ProvideAddressData" targetRef="ChoosePaymentMethod" />
       <bpmn:startEvent id="StartEvent_0veah6i">
         <bpmn:outgoing>SequenceFlow_19mtvha</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="SequenceFlow_19mtvha" sourceRef="StartEvent_0veah6i" targetRef="Task_provideAddressData" />
+      <bpmn:sequenceFlow id="SequenceFlow_19mtvha" sourceRef="StartEvent_0veah6i" targetRef="ProvideAddressData" />
       <bpmn:endEvent id="EndEvent_paymentRecieved" name="">
         <bpmn:incoming>SequenceFlow_1eqkevp</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="SequenceFlow_023fx4b" sourceRef="Task_choosePaymentMethod" targetRef="Task_confirmOrder" />
-      <bpmn:userTask id="Task_confirmOrder" name="Confirm order placement" camunda:formKey="embedded:app:orderConfirmation.html" camunda:assignee="${initUser}">
+      <bpmn:sequenceFlow id="SequenceFlow_023fx4b" sourceRef="ChoosePaymentMethod" targetRef="ConfirmOrder" />
+      <bpmn:userTask id="ConfirmOrder" name="Confirm order placement" camunda:formKey="embedded:app:orderConfirmation.html" camunda:assignee="${initUser}">
         <bpmn:incoming>SequenceFlow_023fx4b</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_1eqkevp</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:sequenceFlow id="SequenceFlow_1eqkevp" sourceRef="Task_confirmOrder" targetRef="EndEvent_paymentRecieved" />
+      <bpmn:sequenceFlow id="SequenceFlow_1eqkevp" sourceRef="ConfirmOrder" targetRef="EndEvent_paymentRecieved" />
     </bpmn:transaction>
     <bpmn:sequenceFlow id="SequenceFlow_0uz09me" sourceRef="Task_1tuoix7" targetRef="EventGateway_waitForShipping" />
     <bpmn:sequenceFlow id="SequenceFlow_09rp9d3" sourceRef="IntermediateCatchEvent_orderCancelled" targetRef="Task_cancleOrder" />
@@ -194,13 +220,13 @@
           <dc:Bounds x="464" y="194.5" width="90" height="13" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_09j9lww_di" bpmnElement="Task_confirmOrder">
+      <bpmndi:BPMNShape id="UserTask_09j9lww_di" bpmnElement="ConfirmOrder">
         <dc:Bounds x="657" y="176" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_075ox29_di" bpmnElement="Task_provideAddressData">
+      <bpmndi:BPMNShape id="UserTask_075ox29_di" bpmnElement="ProvideAddressData">
         <dc:Bounds x="395" y="176" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_1acfudo_di" bpmnElement="Task_choosePaymentMethod">
+      <bpmndi:BPMNShape id="UserTask_1acfudo_di" bpmnElement="ChoosePaymentMethod">
         <dc:Bounds x="523" y="176" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Transaction_02977y4_di" bpmnElement="SubProcess_shipmentDataInput" isExpanded="true">

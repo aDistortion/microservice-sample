@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "uuid": "aUuid",
+      "quantity": 1
+    },
+    {
+      "uuid": "anotherUuid",
+      "quantity": 2
+    }
+  ]
+}

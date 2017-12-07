@@ -8,32 +8,24 @@ package at.free23.order.api;
  *
  */
 public class LineItemDto {
-	private Long id;
-	private Long quantity;
+
 	private String uuid;
+	private Integer quantity;
+	private Double netAmount;
 
 	public LineItemDto() {
 	}
 
-	public LineItemDto(Long id, Long quantity, String uuid) {
-		this.id = id;
-		this.quantity = quantity;
+	public LineItemDto(String uuid, Integer quantity) {
 		this.uuid = uuid;
+		this.quantity = quantity;
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	public Long getQuantity() {
+	public Integer getQuantity() {
 		return this.quantity;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setQuantity(Long quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
@@ -43,5 +35,20 @@ public class LineItemDto {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+	/**
+	 * @return the netAmount
+	 */
+	public Double getNetAmount() {
+		return this.netAmount;
+	}
+
+	/**
+	 * @param netAmount
+	 *            the netAmount to set
+	 */
+	public void setNetAmount(Double netAmount) {
+		this.netAmount = netAmount;
 	}
 }

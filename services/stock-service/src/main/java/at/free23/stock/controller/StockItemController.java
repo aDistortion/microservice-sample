@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import at.free23.stock.api.LineItemDto;
+import at.free23.stock.api.StockItemDto;
 import at.free23.stock.model.StockItem;
 import at.free23.stock.repository.StockItemRepository;
 
@@ -25,8 +25,8 @@ public class StockItemController {
 	private StockItemRepository stockRepo;
 
 	@RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
-	public LineItemDto getStockItem(@PathVariable("uuid") String uuid) {
+	public StockItemDto getStockItem(@PathVariable("uuid") String uuid) {
 		final StockItem item = this.stockRepo.findByUuid(uuid);
-		return new LineItemDto(item);
+		return new StockItemDto(item);
 	}
 }
