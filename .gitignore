@@ -100,3 +100,9 @@ buildNumber.properties
 
 # End of https://www.gitignore.io/api/java,maven,eclipse
 shared/
+
+services/shop-service/\.mvn/
+
+services/shop-service/mvnw
+
+services/shop-service/mvnw\.cmd
