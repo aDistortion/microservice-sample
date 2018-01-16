@@ -106,3 +106,5 @@ services/shop-service/\.mvn/
 services/shop-service/mvnw
 
 services/shop-service/mvnw\.cmd
+
+.vscode/
